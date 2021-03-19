@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 
 from django.db import models
+from django.forms import ModelForm
 
 class Food_Mode(models.Model):
     title = models.CharField(max_length=200)
@@ -25,6 +26,10 @@ class Food(models.Model):
     def __str__(self):
         return self.restaurant + " - " +self.dishes
 
+class FoodForm(ModelForm):
+    class Meta:
+        model=Food
+        fields=[ 'log_date', 'restaurant', 'dishes', 'mode', 'contact']
 
 # class Choice(models.Model):
 #     question = models.ForeignKey(Food, on_delete=models.CASCADE)

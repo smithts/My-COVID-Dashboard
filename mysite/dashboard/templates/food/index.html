@@ -1,9 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Food{% endblock %}
+{% block content %}
+<table>
+    <tr>
+{% for header in headers %}
+        <td>{{header}} </td>
+{% endfor %}
+    </tr>
 {% if food %}
-    <ul>
+    <tr>
     {% for f in food %}
-        <li><a href="{% url 'dashboard:detail' f.id %}">{{ f.restaurant }}</a></li>
+        <td>{{ f.log_date }}</td><td>{{ f.restaurant }}</td><td>{{ f.dishes }}</td><td>{{ f.mode }}</td><td>{{ f.contact }}</td><td><a href="{% url 'dashboard:detail' f.id %}">VIEW</a></td></tr>
     {% endfor %}
-    </ul>
+
 {% else %}
-    <p>No Food Logs are available.</p>
+    <tr>No Food Logs are available.</tr>
 {% endif %}
+</table>
+
+<a href="{% url 'dashboard:add' %}">ADD</a>
+{% endblock %}
