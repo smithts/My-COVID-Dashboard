@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 
-from .models import Food, FoodForm
+from .models import Food, Food_Contact, FoodForm
 
 from django.template import loader
 from django.shortcuts import render, redirect
@@ -15,7 +15,12 @@ def index(request):
     #get all logs within the past 2 weeks
     two_weeks_ago = timezone.now().date() - timedelta(days=14)
 
-    food = Food.objects.filter(log_date__gte=two_weeks_ago)
+    #all food logs within 2 weeks
+    #food = Food.objects.filter(log_date__gte=two_weeks_ago)
+
+    #all food logs that had pickups with contact
+    food_contact = Food_Contact.objects.filter(title__exact="No").get()
+    food = food_contact.food_set.filter(log_date__gte=two_weeks_ago)
 
     risk = get_risk([food])
 
