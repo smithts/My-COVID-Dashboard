@@ -5,6 +5,7 @@ from django.db import models
 from django.db import models
 from django.forms import ModelForm
 
+
 class Food_Mode(models.Model):
     title = models.CharField(max_length=200)
     def __str__(self):
@@ -22,6 +23,7 @@ class Food(models.Model):
     dishes = models.CharField(max_length=200)
     mode = models.ForeignKey(Food_Mode, on_delete=models.CASCADE)
     contact = models.ForeignKey(Food_Contact, on_delete=models.CASCADE)
+
 
     def __str__(self):
         return self.restaurant + " - " +self.dishes
