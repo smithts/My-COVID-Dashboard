@@ -13,6 +13,6 @@ urlpatterns = [
     path('food/<int:id>/', views.detail, name='detail'),
     # ex: /food/add/
     path('food/add', views.add, name='add'),
-
+    path('success', views.success, name='success')
 ]
 
