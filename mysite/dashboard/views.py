@@ -1,33 +1,42 @@
 from django.http import HttpResponse
 
-from .models import Food
+from .models import Food, FoodForm
+
 from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import generic
 
-class IndexView(generic.ListView):
-    template_name = 'food/index.html'
-    context_object_name = 'food'
 
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Food.objects.all()[:5]
-
-class DetailView(generic.DetailView):
-    model = Food
-    template_name = 'food/detail.html'
 
 def index(request):
     return HttpResponse("COVID RISK HIGH.")
 
-def add(request):
-    return HttpResponse("ADD FOOD")
+def view(request):
 
-
-def detail(request, food_id):
+    headers = ['Date', 'Restaurant', 'Dishes', 'Type', 'No Contact']
 
     context = {
         'food': Food.objects.all(),
+        'headers':headers
     }
     return render(request, 'food/index.html', context)
+
+def add(request):
+    form = FoodForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        response = redirect('/dashboard/food')
+        return response
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'food/add.html', context)
+
+def detail(request, id):
+
+    context = {
+        'food': Food.objects.get(pk=id),
+    }
+    return render(request, 'food/detail.html', context)
