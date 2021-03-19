@@ -1,0 +1,9 @@
+{% if food %}
+    <ul>
+    {% for f in food %}
+        <li><a href="{% url 'dashboard:detail' f.id %}">{{ f.restaurant }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Food Logs are available.</p>
+{% endif %}

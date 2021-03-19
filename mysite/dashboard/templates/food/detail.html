@@ -1,0 +1,10 @@
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'dashboard:detail' food.id %}" method="post">
+{% csrf_token %}
+{% for choice in food.contact.all %}
+<!--    <input type="radio" name="choice" id="contact{{ forloop.counter }}" value="{{ contact.id }}">-->
+<!--    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>-->
+{% endfor %}
+<input type="submit" value="Vote">
+</form>
