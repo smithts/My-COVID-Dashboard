@@ -16,11 +16,11 @@ def index(request):
     two_weeks_ago = timezone.now().date() - timedelta(days=14)
 
     #all food logs within 2 weeks
-    #food = Food.objects.filter(log_date__gte=two_weeks_ago)
+    food = Food.objects.filter(log_date__gte=two_weeks_ago)
 
     #all food logs that had pickups with contact
-    food_contact = Food_Contact.objects.filter(title__exact="No").get()
-    food = food_contact.food_set.filter(log_date__gte=two_weeks_ago)
+    #food_contact = Food_Contact.objects.filter(title__exact="No").get()
+    #food = food_contact.food_set.filter(log_date__gte=two_weeks_ago)
 
     risk = get_risk([food])
 
@@ -30,9 +30,8 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def view(request):
-
-    headers = ['Date', 'Restaurant', 'Dishes', 'Type', 'No Contact']
+def view_food(request):
+    headers = ['Date', 'Restaurant', 'Dishes', 'Type', 'No Contact', '']
 
     context = {
         'food': Food.objects.all(),
@@ -40,7 +39,7 @@ def view(request):
     }
     return render(request, 'food/index.html', context)
 
-def add(request):
+def add_food(request):
     form = FoodForm(request.POST or None)
     if form.is_valid():
         form.save()
@@ -52,7 +51,7 @@ def add(request):
     }
     return render(request, 'food/add.html', context)
 
-def detail(request, id):
+def detail_food(request, id):
 
     context = {
         'food': Food.objects.get(pk=id),
@@ -61,3 +60,16 @@ def detail(request, id):
 
 def success(request):
     return render(request, 'save/success.html')
+
+
+def view_medicine(request):
+    return None
+
+def view_doctor(request):
+    return None
+
+def view_symptom(request):
+    return None
+
+def view_trip(request):
+    return None
