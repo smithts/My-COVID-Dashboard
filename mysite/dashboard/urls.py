@@ -13,7 +13,7 @@ urlpatterns = [
     path('food/<int:id>/', views.detail_food, name='detail'),
     # ex: /food/add/
     path('food/add', views.add_food, name='add'),
-    path('success', views.success, name='success'),
-    path('medicines/', views.view_medicine, name="medicine_view")
+    path('success', views.success, name='success')
+    #path('medicines/', views.view_medicine, name="medicine_view")
 ]
 
