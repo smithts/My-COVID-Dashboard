@@ -30,8 +30,8 @@ class Food(models.Model):
 
 class FoodForm(ModelForm):
     class Meta:
-        model=Food
-        fields=[ 'log_date', 'restaurant', 'dishes', 'mode', 'contact']
+        model = Food
+        fields = ['log_date', 'restaurant', 'dishes', 'mode', 'contact']
 
 # class Choice(models.Model):
 #     question = models.ForeignKey(Food, on_delete=models.CASCADE)
