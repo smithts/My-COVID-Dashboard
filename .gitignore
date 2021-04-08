@@ -132,3 +132,4 @@ dmypy.json
 .idea/*
 
 mysite/dashboard/migrations/*.DS_Store
+/mysite/dashboard/migrations/0*
