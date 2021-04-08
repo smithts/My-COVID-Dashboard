@@ -7,14 +7,23 @@ app_name = 'dashboard'
 urlpatterns = [
     # ex: /dashboard/
     path('', views.index, name='index'),
-    # ex: /food/
-    path('food/', views.view, name='view'),
-    # ex: /food/5/
-    #path('food/<int:id>/', views.detail, name='detail'),
-    # ex: /food/add/
-    path('food/add', views.add, name='add'),
+
+    #food
+    path('food/', views.view_food, name='food_view'),
+    path('food/add', views.add_food, name='add_food'),
+    path('food/delete/<int:id>/', views.delete_food, name='delete_food'),
+    path('food/<int:id>/', views.detail_food, name='detail_food'),
+
+    #medicine
+    path('medicine/', views.view_medicine, name="medicine_view"),
+    path('medicine/add', views.add_medicine, name="add_medicine"),
+    path('medicine/delete/<int:id>/', views.delete_medicine, name='delete_medicine'),
+    path('medicine/<int:id>/', views.detail_medicine, name="detail_medicine"),
+
+    #symptom
     path('symptom/', views.symptom_view, name="view_symptom"),
     path('symptom/add', views.symptom_add, name="add_symptom"),
+
     path('success', views.success, name='success')
 
 ]

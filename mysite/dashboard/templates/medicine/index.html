@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Medicine{% endblock %}
+{% block content %}
+<table class="results_table">
+    <tr class="results_header">
+{% for header in headers %}
+        <td>{{header}}</td>
+{% endfor %}
+    </tr>
+{% if medicine %}
+    {% for m in medicine %}
+       <tr class="results_row">
+           <td>{{ m.log_date }}</td><td>{{ m.type }}</td><td>{{ m.quantity }}</td><td>{{ m.purpose }}</td>
+           <td><a href="{% url 'dashboard:detail_medicine' m.id %}">VIEW</a> | <a href="{% url 'dashboard:delete_medicine' m.id %}">DELETE</a></td>
+       </tr>
+    {% endfor %}
+
+{% else %}
+    <tr>No Medicine Logs are available.</tr>
+{% endif %}
+</table>
+
+<div class="add_log_button"><a href="{% url 'dashboard:add_medicine' %}">ADD</a></div>
+{% endblock %}
