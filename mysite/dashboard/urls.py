@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 
 from . import views
 
@@ -21,8 +21,9 @@ urlpatterns = [
     path('medicine/<int:id>/', views.detail_medicine, name="detail_medicine"),
 
     #symptom
-    path('symptom/', views.symptom_view, name="symptom_view"),
-    path('symptom/add', views.symptom_add, name="symptom_add"),
+    path('symptom/', views.view_symptom, name="view_symptom"),
+    path('symptom/add', views.add_symptom, name="add_symptom"),
+    path('symptom/delete/<int:id>/', views.delete_symptom, name="delete_symptom"),
 
     path('success', views.success, name='success')
 

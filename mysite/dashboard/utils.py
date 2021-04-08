@@ -21,17 +21,6 @@ def get_risk(flags_list):
 
     return get_risk_label(count)
 
-
-# class SYMPTOMTYPES(Enum):
-#     COUGH = 'COUGH'
-#     FEVER = 'FEVER'
-#     OTHER = 'OTHER'
-#
-#     @classmethod
-#     def choices(cls):
-#         return [(tag, tag.value) for tag in cls]
-
-
 SEVERITY= [tuple([x,x]) for x in range(1,6)]
 
 
