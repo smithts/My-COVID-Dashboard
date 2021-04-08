@@ -9,7 +9,7 @@
 {% if symptoms %}
     <tr>
     {% for s in symptoms %}
-        <td>{{ s.date }}</td><td>{{ s.type }}</td><td>{{ s.severity }}</td><td>{{ s.notes }}</td><td><a href="">DELETE</a></td></tr>
+        <td>{{ s.date }}</td><td>{{ s.type }}</td><td>{{ s.severity }}</td><td>{{ s.notes }}</td><td><a href="{% url 'dashboard:delete_symptom' s.id %}">DELETE</a></td></tr>
     {% endfor %}
 
 {% else %}
@@ -17,5 +17,5 @@
 {% endif %}
 </table>
 
-<a href="{% url 'dashboard:symptom_add' %}">ADD</a>
+<a href="{% url 'dashboard:add_symptom' %}">ADD</a>
 {% endblock %}

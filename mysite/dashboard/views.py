@@ -58,11 +58,11 @@ def delete_food(request, id):
     return view_food(request)
 
 
-def symptom_add(request):
+def add_symptom(request):
     form = SymptomForm(request.POST or None)
     if form.is_valid():
         form.save()
-        response = redirect('/dashboard/success')
+        response = redirect('/dashboard/symptom')
         return response
 
     context = {
@@ -70,12 +70,16 @@ def symptom_add(request):
     }
     return render(request, 'symptom/add.html', context)
 
-def symptom_view(request):
+def view_symptom(request):
     context = {
         'symptoms':Symptom.objects.all(),
         'headers': ['Date', 'Type', 'Severity', 'Notes', '']
     }
     return render(request, 'symptom/index.html', context)
+
+def delete_symptom(request, id):
+    Symptom.objects.filter(id=id).delete()
+    return view_symptom(request)
 
 def success(request):
     return render(request, 'save/success.html')
@@ -114,9 +118,6 @@ def detail_medicine(request, id):
     return render(request, 'medicine/detail.html', context)
 
 def view_doctor(request):
-    return None
-
-def view_symptom(request):
     return None
 
 def view_trip(request):
