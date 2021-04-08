@@ -33,6 +33,22 @@ class FoodForm(ModelForm):
         model = Food
         fields = ['log_date', 'restaurant', 'dishes', 'mode', 'contact']
 
+
+class Medicine(models.Model):
+    log_date = models.DateTimeField('date published')
+    type = models.CharField(max_length=200)
+    quantity = models.CharField(max_length=200)
+    purpose = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.quantity + " of " + self.type
+
+
+class MedicineForm(ModelForm):
+    class Meta:
+        model = Medicine
+        fields = ['log_date', 'type', 'quantity', 'purpose']
+
 # class Choice(models.Model):
 #     question = models.ForeignKey(Food, on_delete=models.CASCADE)
 #     choice_text = models.CharField(max_length=200)

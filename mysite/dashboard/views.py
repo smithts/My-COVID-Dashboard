@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 
-from .models import Food, Food_Contact, FoodForm
+from .models import Food, Food_Contact, FoodForm, Medicine, MedicineForm
 
 from django.template import loader
 from django.shortcuts import render, redirect
@@ -31,7 +31,7 @@ def index(request):
 
 
 def view_food(request):
-    headers = ['Date', 'Restaurant', 'Dishes', 'Type', 'No Contact', '']
+    headers = ['Date', 'Restaurant', 'Dishes', 'Type', 'Contactless', '']
 
     context = {
         'food': Food.objects.all(),
@@ -51,6 +51,10 @@ def add_food(request):
     }
     return render(request, 'food/add.html', context)
 
+def delete_food(request, id):
+    Food.objects.filter(id=id).delete()
+    return view_food(request)
+
 def detail_food(request, id):
 
     context = {
@@ -63,7 +67,37 @@ def success(request):
 
 
 def view_medicine(request):
-    return None
+    headers = ['Date', 'Type', 'Quantity', 'Purpose', '']
+
+    context = {
+        'medicine': Medicine.objects.all(),
+        'headers': headers
+    }
+
+    return render(request, 'medicine/index.html', context)
+
+def add_medicine(request):
+    form = MedicineForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        response = redirect('/dashboard/success')
+        return response
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'medicine/add.html', context)
+
+def delete_medicine(request, id):
+    Medicine.objects.filter(id=id).delete()
+    return view_medicine(request)
+
+def detail_medicine(request, id):
+
+    context = {
+        'medicine': Medicine.objects.get(pk=id)
+    }
+    return render(request, 'medicine/detail.html', context)
 
 def view_doctor(request):
     return None
