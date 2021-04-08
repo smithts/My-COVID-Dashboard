@@ -10,11 +10,11 @@
 {% if food %}
     <tr>
     {% for f in food %}
-        <td>{{ f.log_date }}</td><td>{{ f.restaurant }}</td><td>{{ f.dishes }}</td><td>{{ f.mode }}</td><td>{{ f.contact }}</td><td><a href="{% url 'dashboard:detail' f.id %}">VIEW</a></td></tr>
+        <td>{{ f.log_date }}</td><td>{{ f.restaurant }}</td><td>{{ f.dishes }}</td><td>{{ f.mode }}</td><td>{{ f.contact }}</td><td><a href="#">DELETE</a></td></tr>
     {% endfor %}
 
 {% else %}
-    <tr>No Food Logs are available.</tr>
+    <tr><td colspan="6">No Logs are available.</td></tr>
 {% endif %}
 </table>
 

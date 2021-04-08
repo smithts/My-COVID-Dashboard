@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 
-from .models import Food, Food_Contact, FoodForm
+from .models import *
 
 from django.template import loader
 from django.shortcuts import render, redirect
@@ -52,12 +52,35 @@ def add(request):
     }
     return render(request, 'food/add.html', context)
 
-def detail(request, id):
+# def detail(request, id):
+#
+#     context = {
+#         'data': Food.objects.get(pk=id),
+#     }
+#     return render(request, 'food/detail.html', context)
+
+
+def symptom_view(request):
 
     context = {
-        'food': Food.objects.get(pk=id),
+        'symptoms':Symptom.objects.all(),
+        'headers': ['Date', 'Type', 'Severity', 'Notes', '']
     }
-    return render(request, 'food/detail.html', context)
+
+
+    return render(request, 'symptom/index.html', context)
+
+def symptom_add(request):
+    form = SymptomForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        response = redirect('/dashboard/success')
+        return response
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'symptom/add.html', context)
 
 def success(request):
     return render(request, 'save/success.html')

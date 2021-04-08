@@ -10,9 +10,12 @@ urlpatterns = [
     # ex: /food/
     path('food/', views.view, name='view'),
     # ex: /food/5/
-    path('food/<int:id>/', views.detail, name='detail'),
+    #path('food/<int:id>/', views.detail, name='detail'),
     # ex: /food/add/
     path('food/add', views.add, name='add'),
+    path('symptom/', views.symptom_view, name="view_symptom"),
+    path('symptom/add', views.symptom_add, name="add_symptom"),
     path('success', views.success, name='success')
+
 ]
 
