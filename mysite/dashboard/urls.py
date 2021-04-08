@@ -12,7 +12,7 @@ urlpatterns = [
     path('food/', views.view_food, name='food_view'),
     path('food/add', views.add_food, name='add_food'),
     path('food/delete/<int:id>/', views.delete_food, name='delete_food'),
-    path('food/<int:id>/', views.detail_food, name='detail_food'),
+    #path('food/<int:id>/', views.detail_food, name='detail_food'),
 
     #medicine
     path('medicine/', views.view_medicine, name="medicine_view"),
@@ -21,8 +21,8 @@ urlpatterns = [
     path('medicine/<int:id>/', views.detail_medicine, name="detail_medicine"),
 
     #symptom
-    path('symptom/', views.symptom_view, name="view_symptom"),
-    path('symptom/add', views.symptom_add, name="add_symptom"),
+    path('symptom/', views.symptom_view, name="symptom_view"),
+    path('symptom/add', views.symptom_add, name="symptom_add"),
 
     path('success', views.success, name='success')
 

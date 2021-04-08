@@ -80,7 +80,6 @@ def symptom_view(request):
 def success(request):
     return render(request, 'save/success.html')
 
-
 def view_medicine(request):
     headers = ['Date', 'Type', 'Quantity', 'Purpose', '']
 
