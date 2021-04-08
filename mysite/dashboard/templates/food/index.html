@@ -11,11 +11,11 @@
     {% for f in food %}
        <tr class="results_row">
            <td>{{ f.log_date }}</td><td>{{ f.restaurant }}</td><td>{{ f.dishes }}</td><td>{{ f.mode }}</td><td>{{ f.contact }}</td>
-           <td><a href="{% url 'dashboard:detail_food' f.id %}">VIEW</a> | <a href="{% url 'dashboard:delete_food' f.id %}">DELETE</a></td>
+           <td><a href="{% url 'dashboard:food_view' %}">VIEW</a> | <a href="{% url 'dashboard:delete_food' f.id %}">DELETE</a></td>
        </tr>
     {% endfor %}
 {% else %}
-    <tr>No Food Logs are available.</tr>
+    <tr><td colspan="6">No Logs are available.</td></tr>
 {% endif %}
 </table>
 

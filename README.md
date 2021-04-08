@@ -1,6 +1,6 @@
 # 6234-course-project
 
-#How to Run
+# How to Run
 1. Clone repository code
 2. Install Django python package in your python environment
 3. cd to "6234-course-project/mysite" directory

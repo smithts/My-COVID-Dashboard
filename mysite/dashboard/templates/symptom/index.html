@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<table>
+    <tr>
+{% for header in headers %}
+        <td>{{header}} </td>
+{% endfor %}
+    </tr>
+{% if symptoms %}
+    <tr>
+    {% for s in symptoms %}
+        <td>{{ s.date }}</td><td>{{ s.type }}</td><td>{{ s.severity }}</td><td>{{ s.notes }}</td><td><a href="">DELETE</a></td></tr>
+    {% endfor %}
+
+{% else %}
+    <tr><td colspan="5">No Logs are available.</td></tr>
+{% endif %}
+</table>
+
+<a href="{% url 'dashboard:symptom_add' %}">ADD</a>
+{% endblock %}
