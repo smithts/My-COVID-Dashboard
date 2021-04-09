@@ -2,7 +2,8 @@
 {% block title %}Friend{% endblock %}
 {% block content %}
 <form method="POST"> {% csrf_token %}
+    <label class="add_log_header">Add Friend Log:</label>
     {{form.as_p}}
-    <input type="submit" value="Save" />
+    <input class="save_button" type="submit" value="Save" />
 </form>
 {% endblock %}

@@ -1,8 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Friend{% endblock %}
+{% block title %}Doctor{% endblock %}
 {% block content %}
 <form method="POST"> {% csrf_token %}
+    <label class="add_log_header">Add Doctor Log:</label>
     {{form.as_p}}
-    <input type="submit" value="Save" />
+    <input class="save_button" type="submit" value="Save" />
 </form>
 {% endblock %}
