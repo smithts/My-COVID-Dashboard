@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Trip{% endblock %}
+{% block content %}
+<table class="results_table">
+    <tr class="results_header">
+{% for header in headers %}
+        <th>{{header}}</th>
+{% endfor %}
+    </tr>
+{% if trip %}
+    {% for t in trip %}
+       <tr class="results_row">
+           <td>{{ t.log_date }}</td><td>{{ t.destination }}</td><td>{{ t.travel_mode }}</td><td>{{ t.masked }}</td>
+           <td><a href="{% url 'dashboard:delete_trip' t.id %}">DELETE</a></td>
+       </tr>
+    {% endfor %}
+{% else %}
+    <tr><td colspan="6">No Trip Logs are available.</td></tr>
+{% endif %}
+</table>
+
+<a class="add_log_button" href="{% url 'dashboard:add_trip' %}">ADD</a>
+{% endblock %}
