@@ -12,13 +12,21 @@ urlpatterns = [
     path('food/', views.view_food, name='food_view'),
     path('food/add', views.add_food, name='add_food'),
     path('food/delete/<int:id>/', views.delete_food, name='delete_food'),
-    #path('food/<int:id>/', views.detail_food, name='detail_food'),
+
+    #friend
+    path('friend/', views.view_friend, name='friend_view'),
+    path('friend/add', views.add_friend, name='add_friend'),
+    path('friend/delete/<int:id>/', views.delete_friend, name='delete_friend'),
+
+    #doctor
+    path('doctor/', views.view_doctor, name='doctor_view'),
+    path('doctor/add', views.add_doctor, name='add_doctor'),
+    path('doctor/delete/<int:id>/', views.delete_friend, name='delete_doctor'),
 
     #medicine
     path('medicine/', views.view_medicine, name="medicine_view"),
     path('medicine/add', views.add_medicine, name="add_medicine"),
     path('medicine/delete/<int:id>/', views.delete_medicine, name='delete_medicine'),
-    path('medicine/<int:id>/', views.detail_medicine, name="detail_medicine"),
 
     #symptom
     path('symptom/', views.view_symptom, name="view_symptom"),

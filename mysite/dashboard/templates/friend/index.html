@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Friend{% endblock %}
+{% block content %}
+<table class="results_table">
+    <tr class="results_header">
+{% for header in headers %}
+        <th>{{header}}</th>
+{% endfor %}
+    </tr>
+{% if friend %}
+    {% for f in friend %}
+       <tr class="results_row">
+           <td>{{ f.log_date }}</td><td>{{ f.friend }}</td><td>{{ f.duration }}</td><td>{{ f.indoor }}</td><td>{{ f.masked }}</td><td>{{ f.distanced }}</td>
+           <td><a href="{% url 'dashboard:delete_friend' f.id %}">DELETE</a></td>
+       </tr>
+    {% endfor %}
+{% else %}
+    <tr><td colspan="6">No Friend Logs are available.</td></tr>
+{% endif %}
+</table>
+
+<div class="add_log_button"><a href="{% url 'dashboard:add_friend' %}">ADD</a></div>
+{% endblock %}
