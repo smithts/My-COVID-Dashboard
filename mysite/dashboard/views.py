@@ -173,7 +173,7 @@ def delete_friend(request, id):
 
 # Trip
 def view_trip(request):
-    headers = ['Date', 'Location', 'travel mode', 'Masked', '']
+    headers = ['Date', 'Location', 'Travel Mode', 'Masked', '']
 
     context = {
         'trip': Trip.objects.all(),
