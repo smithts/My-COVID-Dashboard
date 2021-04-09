@@ -171,9 +171,32 @@ def delete_friend(request, id):
     Friend.objects.filter(id=id).delete()
     return view_friend(request)
 
-#Trip
+# Trip
 def view_trip(request):
-    return None
+    headers = ['Date', 'Location', 'Travel Mode', 'Masked', '']
+
+    context = {
+        'trip': Trip.objects.all(),
+        'headers': headers
+    }
+
+    return render(request, 'trip/index.html', context)
+
+def add_trip(request):
+    form = TripForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        response = redirect('/dashboard/success')
+        return response
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'trip/add.html', context)
+
+def delete_trip(request, id):
+    Trip.objects.filter(id=id).delete()
+    return view_trip(request)
 
 
 def success(request):

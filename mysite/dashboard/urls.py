@@ -33,6 +33,11 @@ urlpatterns = [
     path('symptom/add', views.add_symptom, name="add_symptom"),
     path('symptom/delete/<int:id>/', views.delete_symptom, name="delete_symptom"),
 
+    #trip
+    path('trip/', views.view_trip, name='view_trip'),
+    path('trip/add', views.add_trip, name='add_trip'),
+    path('trip/delete/<int:id>/', views.delete_trip, name='delete_trip'),
+
     path('success', views.success, name='success')
 
 ]
