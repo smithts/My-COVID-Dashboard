@@ -4,18 +4,18 @@
 <table class="results_table">
     <tr class="results_header">
 {% for header in headers %}
-        <td>{{header}}</td>
+        <th>{{header}}</th>
 {% endfor %}
     </tr>
 {% if food %}
     {% for f in food %}
        <tr class="results_row">
-           <td>{{ f.log_date }}</td><td>{{ f.restaurant }}</td><td>{{ f.dishes }}</td><td>{{ f.mode }}</td><td>{{ f.contact }}</td>
-           <td><a href="{% url 'dashboard:food_view' %}">VIEW</a> | <a href="{% url 'dashboard:delete_food' f.id %}">DELETE</a></td>
+           <td>{{ f.log_date }}</td><td>{{ f.restaurant }}</td><td>{{ f.dishes }}</td><td>{{ f.mode }}</td><td>{{ f.contactless }}</td>
+           <td><a href="{% url 'dashboard:delete_food' f.id %}">DELETE</a></td>
        </tr>
     {% endfor %}
 {% else %}
-    <tr><td colspan="6">No Logs are available.</td></tr>
+    <tr><td colspan="6">No Food Logs are available.</td></tr>
 {% endif %}
 </table>
 

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Doctor{% endblock %}
+{% block content %}
+<table class="results_table">
+    <tr class="results_header">
+{% for header in headers %}
+        <th>{{header}}</th>
+{% endfor %}
+    </tr>
+{% if doctor %}
+    {% for d in doctor %}
+       <tr class="results_row">
+           <td>{{ d.log_date }}</td><td>{{ d.doctor }}</td><td>{{ d.specialty }}</td><td>{{ d.purpose }}</td><td>{{ d.outcome }}</td>
+           <td><a href="{% url 'dashboard:delete_doctor' d.id %}">DELETE</a></td>
+       </tr>
+    {% endfor %}
+{% else %}
+    <tr><td colspan="6">No Doctor Logs are available.</td></tr>
+{% endif %}
+</table>
+
+<div class="add_log_button"><a href="{% url 'dashboard:add_doctor' %}">ADD</a></div>
+{% endblock %}

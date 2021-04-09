@@ -30,7 +30,7 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
-
+# Food
 def view_food(request):
     headers = ['Date', 'Restaurant', 'Dishes', 'Type', 'Contactless', '']
 
@@ -52,12 +52,11 @@ def add_food(request):
     }
     return render(request, 'food/add.html', context)
 
-
 def delete_food(request, id):
     Food.objects.filter(id=id).delete()
     return view_food(request)
 
-
+# Symptoms
 def add_symptom(request):
     form = SymptomForm(request.POST or None)
     if form.is_valid():
@@ -81,9 +80,7 @@ def delete_symptom(request, id):
     Symptom.objects.filter(id=id).delete()
     return view_symptom(request)
 
-def success(request):
-    return render(request, 'save/success.html')
-
+# Medicine
 def view_medicine(request):
     headers = ['Date', 'Type', 'Quantity', 'Purpose', '']
 
@@ -109,16 +106,75 @@ def add_medicine(request):
 def delete_medicine(request, id):
     Medicine.objects.filter(id=id).delete()
     return view_medicine(request)
-
+'''
 def detail_medicine(request, id):
 
     context = {
         'medicine': Medicine.objects.get(pk=id)
     }
     return render(request, 'medicine/detail.html', context)
+'''
 
+# Doctor
 def view_doctor(request):
-    return None
+    headers = ['Date', 'Doctor', 'Specialty', 'Purpose', 'Outcome', '']
 
+    context = {
+        'doctor': Doctor.objects.all(),
+        'headers': headers
+    }
+
+    return render(request, 'doctor/index.html', context)
+
+def add_doctor(request):
+    form = DoctorForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        response = redirect('/dashboard/success')
+        return response
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'doctor/add.html', context)
+
+def delete_doctor(request, id):
+    Doctor.objects.filter(id=id).delete()
+    return view_doctor(request)
+
+
+
+# Friend
+def view_friend(request):
+    headers = ['Date', 'Friend', 'Duration (Minutes)', 'Indoor', 'Masked', 'Distanced', '']
+
+    context = {
+        'friend': Friend.objects.all(),
+        'headers': headers
+    }
+
+    return render(request, 'friend/index.html', context)
+
+def add_friend(request):
+    form = FriendForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        response = redirect('/dashboard/success')
+        return response
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'friend/add.html', context)
+
+def delete_friend(request, id):
+    Friend.objects.filter(id=id).delete()
+    return view_friend(request)
+
+#Trip
 def view_trip(request):
     return None
+
+
+def success(request):
+    return render(request, 'save/success.html')

@@ -4,14 +4,14 @@
 <table class="results_table">
     <tr class="results_header">
 {% for header in headers %}
-        <td>{{header}}</td>
+        <th>{{header}}</th>
 {% endfor %}
     </tr>
 {% if medicine %}
     {% for m in medicine %}
        <tr class="results_row">
            <td>{{ m.log_date }}</td><td>{{ m.type }}</td><td>{{ m.quantity }}</td><td>{{ m.purpose }}</td>
-           <td><a href="{% url 'dashboard:detail_medicine' m.id %}">VIEW</a> | <a href="{% url 'dashboard:delete_medicine' m.id %}">DELETE</a></td>
+           <td><a href="{% url 'dashboard:delete_medicine' m.id %}">DELETE</a></td>
        </tr>
     {% endfor %}
 
