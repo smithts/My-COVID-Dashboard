@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Sync{% endblock %}
+{% block content %}
+<form method="POST"> {% csrf_token %}
+    <label class="add_log_header">Add Device:</label>
+    {{form.as_p}}
+    <input class="save_button" type="submit" value="Save" />
+</form>
+{% endblock %}

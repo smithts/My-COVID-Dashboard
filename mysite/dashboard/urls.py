@@ -38,6 +38,11 @@ urlpatterns = [
     path('trip/add', views.add_trip, name='add_trip'),
     path('trip/delete/<int:id>/', views.delete_trip, name='delete_trip'),
 
+    #sync
+    path('sync/', views.view_sync, name='view_sync'),
+    path('sync/add', views.add_device, name='add_device'),
+    path('sync/delete/<int:id>/', views.delete_device, name='delete_device'),
+
     path('success', views.success, name='success')
 
 ]
