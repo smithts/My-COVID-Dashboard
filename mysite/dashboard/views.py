@@ -198,6 +198,58 @@ def delete_trip(request, id):
     Trip.objects.filter(id=id).delete()
     return view_trip(request)
 
+# Sync Device
+'''
+def view_device(request):
+    headers = ['Device', 'Date Added', '']
+
+    context = {
+        'device': Device.objects.all(),
+        'headers': headers
+    }
+
+    return render(request, 'sync/index.html', context)
+'''
+# Sync Device
+'''
+def view_healthData(request):
+    headers = ['Date', 'From', 'Activity', '']
+
+    context = {
+        'data': HealthData.objects.all(),
+        'headers': headers
+    }
+
+    return render(request, 'sync/index.html', context)
+'''
+def view_sync(request):
+    deviceHeaders = ['Device', 'Date Added', '']
+    healthHeaders = ['Date', 'From', 'Activity', '']
+
+    context = {
+        'device': Device.objects.all(),
+        'deviceHeaders': deviceHeaders,
+        'data': HealthData.objects.all(),
+        'healthHeaders': healthHeaders
+    }
+
+    return render(request, 'sync/index.html', context)
+
+def add_device(request):
+    form = DeviceForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        response = redirect('/dashboard/success')
+        return response
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'sync/add.html', context)
+
+def delete_device(request, id):
+    Device.objects.filter(id=id).delete()
+    return view_sync(request)
 
 def success(request):
     return render(request, 'save/success.html')

@@ -129,3 +129,37 @@ class TripForm(ModelForm):
     class Meta:
         model = Trip
         fields = ['log_date', 'destination', 'travel_mode', 'masked']
+
+# Sync Device
+class Device(models.Model):
+    DEVICE_CHOICES = (
+        ('AW', 'Apple Watch'),
+        ('FB', 'fitbit'),
+        ('IP','iPhone'),
+        ('AD','Android'),
+    )
+    device = models.CharField(max_length=2, choices=DEVICE_CHOICES)
+    date_added = models.DateTimeField('date published')
+
+    def __str__(self):
+        return self.device + " added on " + self.date_added + "."
+
+class DeviceForm(ModelForm):
+    class Meta:
+        model = Device
+        fields = ['device', 'date_added']
+
+# Sync Health Data
+class HealthData(models.Model):
+
+    device = models.CharField(max_length=100)
+    log_date = models.DateTimeField('date published')
+    activity = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.activity + " logged on " + self.log_date + "."
+
+class HealthDataForm(ModelForm):
+    class Meta:
+        model = HealthData
+        fields = ['log_date', 'device', 'activity']
