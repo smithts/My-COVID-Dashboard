@@ -14,9 +14,8 @@
            <td><a href="{% url 'dashboard:delete_medicine' m.id %}">DELETE</a></td>
        </tr>
     {% endfor %}
-
 {% else %}
-    <tr>No Medicine Logs are available.</tr>
+    <tr><td colspan="6">No Medicine Logs are available.</td></tr>
 {% endif %}
 </table>
 
