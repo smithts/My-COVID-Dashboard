@@ -21,7 +21,7 @@ urlpatterns = [
     #doctor
     path('doctor/', views.view_doctor, name='doctor_view'),
     path('doctor/add', views.add_doctor, name='add_doctor'),
-    path('doctor/delete/<int:id>/', views.delete_friend, name='delete_doctor'),
+    path('doctor/delete/<int:id>/', views.delete_doctor, name='delete_doctor'),
 
     #medicine
     path('medicine/', views.view_medicine, name="medicine_view"),
