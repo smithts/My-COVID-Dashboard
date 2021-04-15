@@ -65,8 +65,24 @@ class SymptomType(models.Model):
 
 
 class Symptom(models.Model):
+    SYMPTOM_CHOICES = (
+        ('FV', 'Fever'),
+        ('CL', 'Chills'),
+        ('CH', 'Cough'),
+        ('DB', 'Difficulty Breathing'),
+        ('ST', 'Sore Throat'),
+        ('MA', 'Muscle Aches'),
+        ('DH', 'Diarrhea'),
+        ('SF', 'Severe Fatigue'),
+        ('NC', 'Nasal Congestion'),
+        ('LT', 'Loss of Taste'),
+        ('LS', 'Loss of Smell'),
+        ('OT', 'Other'),
+    )
+
     date = models.DateTimeField('Date')
-    type = models.ForeignKey(SymptomType, on_delete=models.CASCADE)
+    #type = models.ForeignKey(SymptomType, on_delete=models.CASCADE)
+    type = models.CharField(max_length=2, choices=SYMPTOM_CHOICES)
     severity = models.IntegerField(choices=SEVERITY, default=1)
     notes = models.CharField(max_length=200, null=True)
 

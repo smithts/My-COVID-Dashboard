@@ -10,7 +10,7 @@
 
     {% for s in symptoms %}
         <tr class="results_row">
-        <td>{{ s.date }}</td><td>{{ s.type }}</td><td>{{ s.severity }}</td><td>{{ s.notes }}</td><td><a href="{% url 'dashboard:delete_symptom' s.id %}">DELETE</a></td>
+        <td>{{ s.date }}</td><td>{{ s.get_type_display }}</td><td>{{ s.severity }}</td><td>{{ s.notes }}</td><td><a href="{% url 'dashboard:delete_symptom' s.id %}">DELETE</a></td>
         </tr>
     {% endfor %}
 
