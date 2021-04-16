@@ -4,8 +4,11 @@ from django.db import models
 
 from django.db import models
 from django.forms import ModelForm
+from django import forms
 from .utils import SEVERITY
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 # Food
 class Food_Mode(models.Model):
@@ -23,7 +26,7 @@ class Food_Contact(models.Model):
 
 
 class Food(models.Model):
-    log_date = models.DateTimeField('Date')
+    log_date = models.DateField('Date')
     restaurant = models.CharField(max_length=200)
     dishes = models.CharField(max_length=200)
     mode = models.ForeignKey(Food_Mode, on_delete=models.CASCADE)
@@ -35,13 +38,14 @@ class Food(models.Model):
 
 class FoodForm(ModelForm):
     class Meta:
+        widgets = {'log_date': DateInput()}
         model = Food
         fields = ['log_date', 'restaurant', 'dishes', 'mode', 'contactless']
 
 
 # Medicine
 class Medicine(models.Model):
-    log_date = models.DateTimeField('date published')
+    log_date = models.DateField('date published')
     type = models.CharField(max_length=200)
     quantity = models.CharField(max_length=200)
     purpose = models.CharField(max_length=200)
@@ -52,6 +56,7 @@ class Medicine(models.Model):
 
 class MedicineForm(ModelForm):
     class Meta:
+        widgets = {'log_date': DateInput()}
         model = Medicine
         fields = ['log_date', 'type', 'quantity', 'purpose']
 
@@ -80,7 +85,7 @@ class Symptom(models.Model):
         ('OT', 'Other'),
     )
 
-    log_date = models.DateTimeField('Date')
+    log_date = models.DateField('Date')
     #type = models.ForeignKey(SymptomType, on_delete=models.CASCADE)
     type = models.CharField(max_length=2, choices=SYMPTOM_CHOICES)
     severity = models.IntegerField(choices=SEVERITY, default=1)
@@ -89,13 +94,14 @@ class Symptom(models.Model):
 
 class SymptomForm(ModelForm):
     class Meta:
+        widgets = {'log_date': DateInput()}
         model = Symptom
         fields = ['log_date', 'type', 'severity', 'notes']
 
 
 # Friend
 class Friend(models.Model):
-    log_date = models.DateTimeField('date published')
+    log_date = models.DateField('date published')
     friend = models.CharField(max_length=100)
     duration = models.CharField(max_length=6)
     indoor = models.BooleanField(default=False)
@@ -105,16 +111,16 @@ class Friend(models.Model):
     def __str__(self):
         return "Interaction with " + self.friend + " for " + self.duration + "minutes."
 
-
 class FriendForm(ModelForm):
     class Meta:
+        widgets = {'log_date': DateInput()}
         model = Friend
         fields = ['log_date', 'friend', 'duration', 'indoor', 'masked', 'distanced']
 
 
 # Doctor
 class Doctor(models.Model):
-    log_date = models.DateTimeField('date published')
+    log_date = models.DateField('date published')
     doctor = models.CharField(max_length=200)
     specialty = models.CharField(max_length=200)
     purpose = models.CharField(max_length=200)
@@ -126,13 +132,14 @@ class Doctor(models.Model):
 
 class DoctorForm(ModelForm):
     class Meta:
+        widgets = {'log_date': DateInput()}
         model = Doctor
         fields = ['log_date', 'doctor', 'specialty', 'purpose', 'outcome']
 
 
 # Trip
 class Trip(models.Model):
-    log_date = models.DateTimeField('date published')
+    log_date = models.DateField('date published')
     destination = models.CharField(max_length=100)
     travel_mode = models.CharField(max_length=100)
     masked = models.BooleanField(default=True)
@@ -143,6 +150,7 @@ class Trip(models.Model):
 
 class TripForm(ModelForm):
     class Meta:
+        widgets = {'log_date': DateInput()}
         model = Trip
         fields = ['log_date', 'destination', 'travel_mode', 'masked']
 
@@ -155,13 +163,14 @@ class Device(models.Model):
         ('AD','Android'),
     )
     device = models.CharField(max_length=2, choices=DEVICE_CHOICES)
-    date_added = models.DateTimeField('date published')
+    date_added = models.DateField('date published')
 
     def __str__(self):
         return self.device + " added on " + self.date_added + "."
 
 class DeviceForm(ModelForm):
     class Meta:
+        widgets = {'date_added': DateInput()}
         model = Device
         fields = ['device', 'date_added']
 
@@ -169,7 +178,7 @@ class DeviceForm(ModelForm):
 class HealthData(models.Model):
 
     device = models.CharField(max_length=100)
-    log_date = models.DateTimeField('date published')
+    log_date = models.DateField('date published')
     activity = models.CharField(max_length=100)
 
     def __str__(self):
@@ -177,5 +186,6 @@ class HealthData(models.Model):
 
 class HealthDataForm(ModelForm):
     class Meta:
+        widgets = {'log_date': DateInput()}
         model = HealthData
         fields = ['log_date', 'device', 'activity']
