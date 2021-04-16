@@ -80,7 +80,7 @@ class Symptom(models.Model):
         ('OT', 'Other'),
     )
 
-    date = models.DateTimeField('Date')
+    log_date = models.DateTimeField('Date')
     #type = models.ForeignKey(SymptomType, on_delete=models.CASCADE)
     type = models.CharField(max_length=2, choices=SYMPTOM_CHOICES)
     severity = models.IntegerField(choices=SEVERITY, default=1)
@@ -90,7 +90,7 @@ class Symptom(models.Model):
 class SymptomForm(ModelForm):
     class Meta:
         model = Symptom
-        fields = ['date', 'type', 'severity', 'notes']
+        fields = ['log_date', 'type', 'severity', 'notes']
 
 
 # Friend
