@@ -241,7 +241,7 @@ def view_sync(request):
     healthHeaders = ['Date', 'From', 'Activity', '']
 
     context = {
-        'device': Device.objects.all().order_by(log_order),
+        'device': Device.objects.all().order_by('-date_added'),
         'deviceHeaders': deviceHeaders,
         'data': HealthData.objects.all().order_by(log_order),
         'healthHeaders': healthHeaders
