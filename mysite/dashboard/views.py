@@ -10,6 +10,12 @@ from django.views import generic
 from datetime import timedelta
 from django.utils import timezone
 from .utils import get_risk
+import logging
+
+logger = logging.getLogger(__name__)
+
+#indicates a log_date decending ordering
+log_order = '-log_date'
 
 def index(request):
 
@@ -18,6 +24,13 @@ def index(request):
 
     #all food logs within 2 weeks
     food = Food.objects.filter(log_date__gte=two_weeks_ago)
+    trips = Trip.objects.filter(log_date__gte=two_weeks_ago)
+    symptoms = Symptom.objects.filter(log_date__gte=two_weeks_ago)
+    friends = Friend.objects.filter(log_date__gte=two_weeks_ago)
+
+    for instance in food:
+        if (instance.contactless == False):
+            logger.error(str(instance.log_date) + ": " + instance.restaurant)
 
     #all food logs that had pickups with contact
     #food_contact = Food_Contact.objects.filter(title__exact="No").get()
@@ -28,6 +41,7 @@ def index(request):
     context = {
         'risk': risk
     }
+
     return render(request, 'index.html', context)
 
 # Food
@@ -35,7 +49,7 @@ def view_food(request):
     headers = ['Date', 'Restaurant', 'Dishes', 'Type', 'Contactless', '']
 
     context = {
-        'food': Food.objects.all(),
+        'food': Food.objects.all().order_by(log_order),
         'headers':headers
     }
     return render(request, 'food/index.html', context)
@@ -71,7 +85,7 @@ def add_symptom(request):
 
 def view_symptom(request):
     context = {
-        'symptoms':Symptom.objects.all(),
+        'symptoms':Symptom.objects.all().order_by(log_order),
         'headers': ['Date', 'Type', 'Severity', 'Notes', '']
     }
     return render(request, 'symptom/index.html', context)
@@ -85,7 +99,7 @@ def view_medicine(request):
     headers = ['Date', 'Type', 'Quantity', 'Purpose', '']
 
     context = {
-        'medicine': Medicine.objects.all(),
+        'medicine': Medicine.objects.all().order_by(log_order),
         'headers': headers
     }
 
@@ -120,7 +134,7 @@ def view_doctor(request):
     headers = ['Date', 'Doctor', 'Specialty', 'Purpose', 'Outcome', '']
 
     context = {
-        'doctor': Doctor.objects.all(),
+        'doctor': Doctor.objects.all().order_by(log_order),
         'headers': headers
     }
 
@@ -149,7 +163,7 @@ def view_friend(request):
     headers = ['Date', 'Friend', 'Duration (Minutes)', 'Indoor', 'Masked', 'Distanced', '']
 
     context = {
-        'friend': Friend.objects.all(),
+        'friend': Friend.objects.all().order_by(log_order),
         'headers': headers
     }
 
@@ -176,7 +190,7 @@ def view_trip(request):
     headers = ['Date', 'Location', 'Travel Mode', 'Masked', '']
 
     context = {
-        'trip': Trip.objects.all(),
+        'trip': Trip.objects.all().order_by(log_order),
         'headers': headers
     }
 
@@ -227,9 +241,9 @@ def view_sync(request):
     healthHeaders = ['Date', 'From', 'Activity', '']
 
     context = {
-        'device': Device.objects.all(),
+        'device': Device.objects.all().order_by('-date_added'),
         'deviceHeaders': deviceHeaders,
-        'data': HealthData.objects.all(),
+        'data': HealthData.objects.all().order_by(log_order),
         'healthHeaders': healthHeaders
     }
 
