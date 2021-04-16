@@ -75,7 +75,7 @@ def add_symptom(request):
     form = SymptomForm(request.POST or None)
     if form.is_valid():
         form.save()
-        response = redirect('/dashboard/symptom')
+        response = redirect('/dashboard/success')
         return response
 
     context = {
