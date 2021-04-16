@@ -6,18 +6,18 @@ from enum import IntEnum, Enum
 # low = between 0-1 flags in the past 2 weeks
 def get_risk_label(num_flags):
 
-    if num_flags>=5:
+    if num_flags >= 5:
         return "HIGH"
-    elif num_flags>=2:
+    elif num_flags >= 2:
         return "MEDIUM"
     else:
         return "LOW"
 
 #get risk by counting the number of flagged events of each type
 def get_risk(flags_list):
-    count=0
+    count = 0
     for flags in flags_list:
-        count+=len(flags)
+        count += len(flags)
 
     return get_risk_label(count)
 
