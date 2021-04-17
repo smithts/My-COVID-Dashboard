@@ -79,7 +79,7 @@ def food_risk(food):
         return food.risk_score
 
     risk = 0
-    if (food.contactless == False):
+    if not food.contactless:
         #increase total risk to 1
         risk += 1
 
@@ -109,7 +109,7 @@ def trip_risk(trip):
 
     risk = 1
 
-    if (trip.masked == False):
+    if not trip.masked:
         #increase total risk to 3
         risk += 2
 
