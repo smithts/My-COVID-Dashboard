@@ -169,7 +169,7 @@ def calculate_overall_symptom_risk(log_date_range):
     for symptom in all_symptoms:
         current_risk = symptom_risk(symptom)
         sum += current_risk
-        logger.error("\t\"" + symptom.__str__() + "\" has a risk level of " + str(current_risk))
+        logger.error("\t\"" + symptom.get_type_display() + "\" of Severity " + str(symptom.severity) + " has a risk level of " + str(current_risk))
 
     return sum
 
