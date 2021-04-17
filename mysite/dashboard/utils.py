@@ -75,10 +75,16 @@ def calculate_overall_food_risk(log_date_range):
 
 def food_risk(food):
     #default risk for food is 0
+    if food.risk_score >= 0:
+        return food.risk_score
+
     risk = 0
     if (food.contactless == False):
         #increase total risk to 1
         risk += 1
+
+    food.risk_score = risk
+    food.save()
 
     return risk
 
@@ -98,11 +104,17 @@ def calculate_overall_trip_risk(log_date_range):
 
 def trip_risk(trip):
     #default risk for any trip at all is 1?
+    if trip.risk_score >= 0:
+        return trip.risk_score
+
     risk = 1
 
     if (trip.masked == False):
         #increase total risk to 3
         risk += 2
+
+    trip.risk_score = risk
+    trip.save()
 
     return risk
 
@@ -121,6 +133,9 @@ def calculate_overall_friend_risk(log_date_range):
     return sum
 
 def friend_risk(friend):
+    if friend.risk_score >= 0:
+        return friend.risk_score
+
     #Default friend risk is 0
     risk = 0
 
@@ -141,6 +156,9 @@ def friend_risk(friend):
     #Include a field to determine if all participants
     #are vaccinated that neutralizes this score?
 
+    friend.risk_score = risk
+    friend.save()
+
     return risk
 
 # Symptom
@@ -156,6 +174,9 @@ def calculate_overall_symptom_risk(log_date_range):
     return sum
 
 def symptom_risk(symptom):
+    if symptom.risk_score >= 0:
+        return symptom.risk_score
+
     risk = 0
     t = symptom.type
     # Fever, Cough, Fatigue, Muscle Aches, Difficulty Breathing
@@ -183,5 +204,9 @@ def symptom_risk(symptom):
     else:
         #These are moderately characteristic of COVID, and thus medium risk
         risk += 3
+
+
+    symptom.risk_score = risk
+    symptom.save()
 
     return risk

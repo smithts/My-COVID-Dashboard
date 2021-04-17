@@ -37,6 +37,7 @@ class Food(models.Model):
     dishes = models.CharField(max_length=200)
     mode = models.CharField(max_length=2, choices=MODE_CHOICES)
     contactless = models.BooleanField(default=True)
+    risk_score = models.IntegerField(default=-1)
 
     def __str__(self):
         return self.restaurant + " - " + self.dishes
@@ -97,6 +98,7 @@ class Symptom(models.Model):
     type = models.CharField(max_length=2, choices=SYMPTOM_CHOICES)
     severity = models.IntegerField(choices=SEVERITY, default=1)
     notes = models.CharField(max_length=200, null=True)
+    risk_score = models.IntegerField(default=-1)
 
     def __str__(self):
         return self.type + " of severity " + str(self.severity) + " on " + str(self.log_date)
@@ -118,6 +120,7 @@ class Friend(models.Model):
     indoor = models.BooleanField(default=False)
     masked = models.BooleanField(default=True)
     distanced = models.BooleanField(default=True)
+    risk_score = models.IntegerField(default=-1)
 
     def __str__(self):
         return "Interaction with " + self.friend + " for " + str(self.duration) + " minutes."
@@ -154,6 +157,7 @@ class Trip(models.Model):
     destination = models.CharField(max_length=100)
     travel_mode = models.CharField(max_length=100)
     masked = models.BooleanField(default=True)
+    risk_score = models.IntegerField(default=-1)
 
     def __str__(self):
         return "Travelled to " + self.destination + " in a " + self.travel_mode + "."
