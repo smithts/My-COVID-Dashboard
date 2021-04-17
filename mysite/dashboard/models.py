@@ -5,7 +5,8 @@ from django.db import models
 from django.db import models
 from django.forms import ModelForm
 from django import forms
-from .utils import SEVERITY
+
+SEVERITY= [tuple([x,x]) for x in range(1,6)]
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -82,12 +83,13 @@ class Symptom(models.Model):
         ('DB', 'Difficulty Breathing'),
         ('ST', 'Sore Throat'),
         ('MA', 'Muscle Aches'),
+        ("HA", "Headache"),
         ('DH', 'Diarrhea'),
         ('SF', 'Severe Fatigue'),
         ('NC', 'Nasal Congestion'),
-        ('LT', 'Loss of Taste'),
-        ('LS', 'Loss of Smell'),
-        ('OT', 'Other'),
+        ('LT', 'New Loss of Taste'),
+        ('LS', 'New Loss of Smell'),
+        ('OT', 'Other')
     )
 
     log_date = models.DateField('Date')
@@ -95,6 +97,10 @@ class Symptom(models.Model):
     type = models.CharField(max_length=2, choices=SYMPTOM_CHOICES)
     severity = models.IntegerField(choices=SEVERITY, default=1)
     notes = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.type + " of severity " + str(self.severity) + " on " + str(self.log_date)
+
 
 
 class SymptomForm(ModelForm):
@@ -108,13 +114,13 @@ class SymptomForm(ModelForm):
 class Friend(models.Model):
     log_date = models.DateField('date published')
     friend = models.CharField(max_length=100)
-    duration = models.CharField(max_length=6)
+    duration = models.IntegerField()
     indoor = models.BooleanField(default=False)
     masked = models.BooleanField(default=True)
     distanced = models.BooleanField(default=True)
 
     def __str__(self):
-        return "Interaction with " + self.friend + " for " + self.duration + "minutes."
+        return "Interaction with " + self.friend + " for " + str(self.duration) + " minutes."
 
 class FriendForm(ModelForm):
     class Meta:
