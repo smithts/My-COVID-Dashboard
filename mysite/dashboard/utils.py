@@ -1,6 +1,5 @@
 from enum import IntEnum, Enum
 
-
 # high = more than 5 flags in the past 2 weeks
 # medium = between 2-5 flags in the past 2 weeks
 # low = between 0-1 flags in the past 2 weeks
@@ -23,6 +22,9 @@ def get_risk(flags_list):
 
 SEVERITY= [tuple([x,x]) for x in range(1,6)]
 
+
+def calculate_risk():
+    return None
 
 #tests
 # food=[1,2,3]

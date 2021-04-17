@@ -58,7 +58,7 @@ def add_food(request):
     form = FoodForm(request.POST or None)
     if form.is_valid():
         form.save()
-        response = redirect('/dashboard/success')
+        response = redirect('/dashboard/food/success')
         return response
 
     context = {
@@ -70,12 +70,15 @@ def delete_food(request, id):
     Food.objects.filter(id=id).delete()
     return view_food(request)
 
+def success_food(request):
+    return render(request, 'food/success.html')
+
 # Symptoms
 def add_symptom(request):
     form = SymptomForm(request.POST or None)
     if form.is_valid():
         form.save()
-        response = redirect('/dashboard/symptom')
+        response = redirect('/dashboard/symptom/success')
         return response
 
     context = {
@@ -94,6 +97,10 @@ def delete_symptom(request, id):
     Symptom.objects.filter(id=id).delete()
     return view_symptom(request)
 
+def success_symptom(request):
+    return render(request, 'symptom/success.html')
+
+
 # Medicine
 def view_medicine(request):
     headers = ['Date', 'Type', 'Quantity', 'Purpose', '']
@@ -109,7 +116,7 @@ def add_medicine(request):
     form = MedicineForm(request.POST or None)
     if form.is_valid():
         form.save()
-        response = redirect('/dashboard/success')
+        response = redirect('/dashboard/medicine/success')
         return response
 
     context = {
@@ -120,14 +127,9 @@ def add_medicine(request):
 def delete_medicine(request, id):
     Medicine.objects.filter(id=id).delete()
     return view_medicine(request)
-'''
-def detail_medicine(request, id):
 
-    context = {
-        'medicine': Medicine.objects.get(pk=id)
-    }
-    return render(request, 'medicine/detail.html', context)
-'''
+def success_medicine(request):
+    return render(request, 'medicine/success.html')
 
 # Doctor
 def view_doctor(request):
@@ -144,7 +146,7 @@ def add_doctor(request):
     form = DoctorForm(request.POST or None)
     if form.is_valid():
         form.save()
-        response = redirect('/dashboard/success')
+        response = redirect('/dashboard/doctor/success')
         return response
 
     context = {
@@ -156,7 +158,8 @@ def delete_doctor(request, id):
     Doctor.objects.filter(id=id).delete()
     return view_doctor(request)
 
-
+def success_doctor(request):
+    return render(request, 'doctor/success.html')
 
 # Friend
 def view_friend(request):
@@ -173,7 +176,7 @@ def add_friend(request):
     form = FriendForm(request.POST or None)
     if form.is_valid():
         form.save()
-        response = redirect('/dashboard/success')
+        response = redirect('/dashboard/friend/success')
         return response
 
     context = {
@@ -184,6 +187,9 @@ def add_friend(request):
 def delete_friend(request, id):
     Friend.objects.filter(id=id).delete()
     return view_friend(request)
+
+def success_friend(request):
+    return render(request, 'friend/success.html')
 
 # Trip
 def view_trip(request):
@@ -200,7 +206,7 @@ def add_trip(request):
     form = TripForm(request.POST or None)
     if form.is_valid():
         form.save()
-        response = redirect('/dashboard/success')
+        response = redirect('/dashboard/trip/success')
         return response
 
     context = {
@@ -211,6 +217,10 @@ def add_trip(request):
 def delete_trip(request, id):
     Trip.objects.filter(id=id).delete()
     return view_trip(request)
+
+def success_trip(request):
+    return render(request, 'trip/success.html')
+
 
 # Sync Device
 '''
@@ -253,7 +263,7 @@ def add_device(request):
     form = DeviceForm(request.POST or None)
     if form.is_valid():
         form.save()
-        response = redirect('/dashboard/success')
+        response = redirect('/dashboard/sync/success')
         return response
 
     context = {
@@ -264,6 +274,13 @@ def add_device(request):
 def delete_device(request, id):
     Device.objects.filter(id=id).delete()
     return view_sync(request)
+
+def success_sync(request):
+    return render(request, 'sync/success.html')
+
+
+
+
 
 def success(request):
     return render(request, 'save/success.html')

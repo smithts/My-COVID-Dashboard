@@ -163,7 +163,7 @@ class TripForm(ModelForm):
 class Device(models.Model):
     DEVICE_CHOICES = (
         ('AW', 'Apple Watch'),
-        ('FB', 'fitbit'),
+        ('FB', 'Fitbit'),
         ('IP','iPhone'),
         ('AD','Android'),
     )
