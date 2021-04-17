@@ -26,10 +26,15 @@ class Food_Contact(models.Model):
 
 
 class Food(models.Model):
+    MODE_CHOICES = (
+        ('PU', 'Pick-up'),
+        ('DV', 'Delivery'),
+    )
+
     log_date = models.DateField('Date')
     restaurant = models.CharField(max_length=200)
     dishes = models.CharField(max_length=200)
-    mode = models.ForeignKey(Food_Mode, on_delete=models.CASCADE)
+    mode = models.CharField(max_length=2, choices=MODE_CHOICES)
     contactless = models.BooleanField(default=True)
 
     def __str__(self):
