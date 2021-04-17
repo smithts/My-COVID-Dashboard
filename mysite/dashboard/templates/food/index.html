@@ -10,7 +10,7 @@
 {% if food %}
     {% for f in food %}
        <tr class="results_row">
-           <td>{{ f.log_date }}</td><td>{{ f.restaurant }}</td><td>{{ f.dishes }}</td><td>{{ f.mode }}</td><td>{{ f.contactless }}</td>
+           <td>{{ f.log_date }}</td><td>{{ f.restaurant }}</td><td>{{ f.dishes }}</td><td>{{ f.get_mode_display }}</td><td>{{ f.contactless }}</td>
            <td><a href="{% url 'dashboard:delete_food' f.id %}">DELETE</a></td>
        </tr>
     {% endfor %}

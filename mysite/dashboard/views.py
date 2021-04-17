@@ -28,7 +28,7 @@ def index(request):
 
 # Food
 def view_food(request):
-    headers = ['Date', 'Restaurant', 'Dishes', 'Type', 'Contactless', '']
+    headers = ['Date', 'Restaurant', 'Dishes', 'Mode', 'Contactless', '']
 
     context = {
         'food': Food.objects.all().order_by(log_order),
