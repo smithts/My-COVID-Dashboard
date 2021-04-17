@@ -50,7 +50,7 @@ urlpatterns = [
     path('sync/delete/<int:id>/', views.delete_device, name='delete_device'),
     path('sync/success', views.success_sync, name='success_sync'),
 
-    path('success', views.success, name='success')
+    #path('success', views.success, name='success')
 
 
 ]

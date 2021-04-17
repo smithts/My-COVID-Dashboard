@@ -1,14 +1,7 @@
 from django.http import HttpResponse
 
 from .models import *
-
-
-from django.template import loader
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.views import generic
-from datetime import timedelta
-from django.utils import timezone
 from .utils import calculate_risk
 import logging
 
@@ -260,9 +253,7 @@ def delete_device(request, id):
 def success_sync(request):
     return render(request, 'sync/success.html')
 
-
-
-
-
+'''
 def success(request):
     return render(request, 'save/success.html')
+'''
