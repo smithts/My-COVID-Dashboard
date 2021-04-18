@@ -181,7 +181,7 @@ class Device(models.Model):
     date_added = models.DateField('date published')
 
     def __str__(self):
-        return self.device + " added on " + self.date_added + "."
+        return self.device + " added on " + str(self.date_added) + "."
 
 class DeviceForm(ModelForm):
     class Meta:
@@ -192,15 +192,18 @@ class DeviceForm(ModelForm):
 # Sync Health Data
 class HealthData(models.Model):
 
+    #device = models.ForeignKey(Device, on_delete=models.CASCADE, null=True)
     device = models.CharField(max_length=100)
     log_date = models.DateField('date published')
     activity = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.activity + " logged on " + self.log_date + "."
+        return self.activity + " logged on " + str(self.log_date) + "."
 
+'''
 class HealthDataForm(ModelForm):
     class Meta:
         widgets = {'log_date': DateInput()}
         model = HealthData
         fields = ['log_date', 'device', 'activity']
+'''

@@ -38,6 +38,7 @@ urlpatterns = [
     path('symptom/delete/<int:id>/', views.delete_symptom, name="delete_symptom"),
     path('symptom/success', views.success_symptom, name='success_symptom'),
 
+
     #trip
     path('trip/', views.view_trip, name='trip_view'),
     path('trip/add', views.add_trip, name='add_trip'),
@@ -49,6 +50,7 @@ urlpatterns = [
     path('sync/add', views.add_device, name='add_device'),
     path('sync/delete/<int:id>/', views.delete_device, name='delete_device'),
     path('sync/success', views.success_sync, name='success_sync'),
+    path('sync/device_already_synced', views.failure_sync, name='failure_sync'),
 
     #path('success', views.success, name='success')
 
