@@ -3,7 +3,9 @@
 {% block content %}
 <form method="POST"> {% csrf_token %}
     <label class="add_log_header">Add Trip Log:</label>
-    {{form.as_p}}
+    <table>
+        {{form.as_table}}
+    </table>
     <input class="save_button" type="submit" value="Save" />
 </form>
 {% endblock %}
