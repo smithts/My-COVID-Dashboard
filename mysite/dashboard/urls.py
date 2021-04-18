@@ -52,7 +52,7 @@ urlpatterns = [
     path('sync/success', views.success_sync, name='success_sync'),
     path('sync/device_already_synced', views.failure_sync, name='failure_sync'),
 
-    path('success', views.success, name='success')
+    #path('success', views.success, name='success')
 
 
 ]

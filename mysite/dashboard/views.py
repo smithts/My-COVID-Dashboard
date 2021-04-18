@@ -1,15 +1,8 @@
 from django.http import HttpResponse
 
 from .models import *
-
-
-from django.template import loader
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.views import generic
-from datetime import timedelta
-from django.utils import timezone
-from .utils import get_risk
+from .utils import calculate_risk
 import logging
 
 logger = logging.getLogger(__name__)
@@ -18,25 +11,7 @@ logger = logging.getLogger(__name__)
 log_order = '-log_date'
 
 def index(request):
-
-    #get all logs within the past 2 weeks
-    two_weeks_ago = timezone.now().date() - timedelta(days=14)
-
-    #all food logs within 2 weeks
-    food = Food.objects.filter(log_date__gte=two_weeks_ago)
-    trips = Trip.objects.filter(log_date__gte=two_weeks_ago)
-    symptoms = Symptom.objects.filter(log_date__gte=two_weeks_ago)
-    friends = Friend.objects.filter(log_date__gte=two_weeks_ago)
-
-    for instance in food:
-        if (instance.contactless == False):
-            logger.error(str(instance.log_date) + ": " + instance.restaurant)
-
-    #all food logs that had pickups with contact
-    #food_contact = Food_Contact.objects.filter(title__exact="No").get()
-    #food = food_contact.food_set.filter(log_date__gte=two_weeks_ago)
-
-    risk = get_risk([food])
+    risk = calculate_risk()
 
     context = {
         'risk': risk
