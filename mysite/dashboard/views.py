@@ -263,5 +263,7 @@ def success_sync(request):
 def failure_sync(request):
     return render(request, 'sync/device_already_synced.html')
 
+'''
 def success(request):
     return render(request, 'save/success.html')
+'''
