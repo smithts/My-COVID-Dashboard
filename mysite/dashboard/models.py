@@ -153,9 +153,16 @@ class DoctorForm(ModelForm):
 
 # Trip
 class Trip(models.Model):
+    TRANSPORTATION_CHOICES = (
+        ('CR', 'Car'),
+        ('BS', 'Bus'),
+        ('TN', 'Train'),
+        ('AP', 'Airplane'),
+        ('RS', 'Rideshare'),
+    )
     log_date = models.DateField('date published')
     destination = models.CharField(max_length=100)
-    travel_mode = models.CharField(max_length=100)
+    travel_mode = models.CharField(max_length=2, choices=TRANSPORTATION_CHOICES)
     masked = models.BooleanField(default=True)
     risk_score = models.IntegerField(default=-1)
 
