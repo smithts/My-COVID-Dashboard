@@ -221,31 +221,6 @@ def delete_trip(request, id):
 def success_trip(request):
     return render(request, 'trip/success.html')
 
-
-# Sync Device
-'''
-def view_device(request):
-    headers = ['Device', 'Date Added', '']
-
-    context = {
-        'device': Device.objects.all(),
-        'headers': headers
-    }
-
-    return render(request, 'sync/index.html', context)
-'''
-# Sync Device
-'''
-def view_healthData(request):
-    headers = ['Date', 'From', 'Activity', '']
-
-    context = {
-        'data': HealthData.objects.all(),
-        'headers': headers
-    }
-
-    return render(request, 'sync/index.html', context)
-'''
 def view_sync(request):
     deviceHeaders = ['Device', 'Date Added', '']
     healthHeaders = ['Date', 'From', 'Activity', '']
@@ -262,8 +237,15 @@ def view_sync(request):
 def add_device(request):
     form = DeviceForm(request.POST or None)
     if form.is_valid():
-        form.save()
-        response = redirect('/dashboard/sync/success')
+
+        # Retrieve device type from form request. If the device has already been
+        # synced, do not add it to the database.
+        user_device = form.cleaned_data.get('device')
+        if not Device.objects.filter(device=user_device).exists():
+            form.save()
+            response = redirect('/dashboard/sync/success')
+        else:
+            response = redirect('/dashboard/sync/device_already_synced')
         return response
 
     context = {
@@ -278,9 +260,8 @@ def delete_device(request, id):
 def success_sync(request):
     return render(request, 'sync/success.html')
 
-
-
-
+def failure_sync(request):
+    return render(request, 'sync/device_already_synced.html')
 
 def success(request):
     return render(request, 'save/success.html')

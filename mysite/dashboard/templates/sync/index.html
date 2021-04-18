@@ -4,41 +4,100 @@
 
 <table class="results_table">
     <tr class="results_header">
-    {% for header in deviceHeaders %}
-        <th>{{header}}</th>
-    {% endfor %}
+        {% for header in deviceHeaders %}
+            <th>{{header}}</th>
+        {% endfor %}
     </tr>
-{% if device %}
-    {% for d in device %}
-       <tr class="results_row">
-       <!--Note get_device_display is an example of the built in Django function:-->
-       <!--get_FOO_display() when test fields are predefined for a model.-->
-       <td>{{ d.get_device_display }}</td><td>{{ d.date_added }}</td>
-       <td><a href="{% url 'dashboard:delete_device' d.id %}">DELETE</a></td>
-       </tr>
-    {% endfor %}
-{% else %}
-    <tr><td colspan="6">No devices have been synced.</td></tr>
-{% endif %}
+    {% if device %}
+        {% for d in device %}
+            <tr class="results_row">
+                <!--Note get_device_display is an example of the built in Django function:-->
+                <!--get_FOO_display() when test fields are predefined for a model.-->
+                <td>{{ d.get_device_display }}</td><td>{{ d.date_added }}</td>
+                <td><a href="{% url 'dashboard:delete_device' d.id %}">DELETE</a></td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr><td colspan="6">No devices have been synced.</td></tr>
+    {% endif %}
 </table>
 
 <br/><!--Add space between tables -->
 
 <table class="results_table">
     <tr class="results_header">
-{% for header in healthHeaders %}
-        <th>{{header}}</th>
-{% endfor %}
+        {% for header in healthHeaders %}
+            <th>{{header}}</th>
+        {% endfor %}
     </tr>
-{% if data %}
-    {% for h in data %}
-       <tr class="results_row">
-           <td>{{ h.log_date }}</td><td>{{ h.device }}</td><td>{{ h.activity }}</td>
-       </tr>
-    {% endfor %}
-{% else %}
-    <tr><td colspan="6">No health data.</td></tr>
-{% endif %}
+    {% if device %}
+        {% for d in device %}
+            {% if d.get_device_display == 'Fitbit' %}
+                <tr class="results_row">
+                    <td>{{ 'April 16, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'April 6, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'April 3, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'March 20, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+            {% elif d.get_device_display == 'Apple Watch' %}
+                <tr class="results_row">
+                    <td>{{ 'April 18, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'April 10, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'March 10, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'March 8, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'February 12, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+            {% elif d.get_device_display == 'iPhone' %}
+                <tr class="results_row">
+                    <td>{{ 'April 19, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'April 8, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'March 25, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'March 21, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'February 27, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+            {% elif d.get_device_display == 'Android' %}
+                <tr class="results_row">
+                    <td>{{ 'April 11, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>tr>
+                <tr class="results_row">
+                    <td>{{ 'April 5, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'March 17, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'March 11, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+                <tr class="results_row">
+                    <td>{{ 'March 1, 2021' }}</td><td>{{ d.get_device_display }}</td><td>{{ 'Run' }}</td><td></td>
+                </tr>
+            {%  endif %}
+        {% endfor %}
+    {% else %}
+        <tr><td colspan="6">No health data.</td></tr>
+    {% endif %}
 </table>
 
 <a class="add_log_button" href="{% url 'dashboard:add_device' %}">ADD DEVICE</a>
