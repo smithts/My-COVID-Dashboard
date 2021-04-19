@@ -163,7 +163,7 @@ class Trip(models.Model):
     log_date = models.DateField('date published')
     destination = models.CharField(max_length=100)
     travel_mode = models.CharField(max_length=2, choices=TRANSPORTATION_CHOICES)
-    duration = models.CharField(max_length=100)
+    duration = models.CharField(max_length=100, default="")
     masked = models.BooleanField(default=True)
     risk_score = models.IntegerField(default=-1)
 
@@ -203,7 +203,7 @@ class HealthData(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE, null=True)
     log_date = models.DateField('date published')
     activity = models.CharField(max_length=100)
-    step_count = models.IntegerField()
+    step_count = models.IntegerField(default=0)
 
     def __str__(self):
         return self.activity + " logged on " + str(self.log_date) + "."
