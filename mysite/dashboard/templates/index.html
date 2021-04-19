@@ -1,7 +1,25 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-    <div id="risk_display">
-        <p>COVID RISK {{risk}}</p>
+
+     <div class="risk_display"
+     {% if risk == "LOW" %}
+          id="low">
+     {% elif risk == "MEDIUM"%}
+          id="medium">
+     {% elif risk == "HIGH"%}
+          id="high">
+     {% else %}
+          id="very_high">
+     {% endif %}
+
+        <p>COVID RISK IS {{risk}}</p>
+
+     {% if risk == "HIGH" %}
+         <p class="warning_message">Please consider getting a COVID test.</p>
+     {% elif risk == "VERY HIGH" %}
+         <p class="warning_message">Please get a COVID test as soon as possible and reconsider your decisions.</p>
+     {% endif %}
+
     </div>
 {% endblock %}
