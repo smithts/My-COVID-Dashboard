@@ -65,7 +65,7 @@ def add_symptom(request):
 
 def view_symptom(request):
     context = {
-        'symptoms':Symptom.objects.all().order_by(log_order),
+        'symptoms': Symptom.objects.all().order_by(log_order),
         'headers': ['Date', 'Type', 'Severity', 'Notes', '']
     }
     return render(request, 'symptom/index.html', context)
@@ -170,7 +170,7 @@ def success_friend(request):
 
 # Trip
 def view_trip(request):
-    headers = ['Date', 'Location', 'Travel Mode', 'Duration', 'Masked', '']
+    headers = ['Date', 'Location', 'Travel Mode', 'Duration (Days)', 'Masked', '']
 
     context = {
         'trip': Trip.objects.all().order_by(log_order),
