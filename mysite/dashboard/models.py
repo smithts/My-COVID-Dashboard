@@ -52,7 +52,7 @@ class FoodForm(ModelForm):
 
 # Medicine
 class Medicine(models.Model):
-    log_date = models.DateField('date published')
+    log_date = models.DateField('Date')
     type = models.CharField(max_length=200)
     quantity = models.CharField(max_length=200)
     purpose = models.CharField(max_length=200)
@@ -67,15 +67,16 @@ class MedicineForm(ModelForm):
         model = Medicine
         fields = ['log_date', 'type', 'quantity', 'purpose']
 
-
+'''
 # Symptom
 class SymptomType(models.Model):
     title = models.CharField(max_length=200)
 
     def __str__(self):
         return self.title
+'''
 
-
+# Symptom
 class Symptom(models.Model):
     SYMPTOM_CHOICES = (
         ('FV', 'Fever'),
@@ -94,7 +95,6 @@ class Symptom(models.Model):
     )
 
     log_date = models.DateField('Date')
-    #type = models.ForeignKey(SymptomType, on_delete=models.CASCADE)
     type = models.CharField(max_length=2, choices=SYMPTOM_CHOICES)
     severity = models.IntegerField(choices=SEVERITY, default=1)
     notes = models.CharField(max_length=200, null=True)
@@ -102,7 +102,6 @@ class Symptom(models.Model):
 
     def __str__(self):
         return self.type + " of severity " + str(self.severity) + " on " + str(self.log_date)
-
 
 
 class SymptomForm(ModelForm):
@@ -114,9 +113,9 @@ class SymptomForm(ModelForm):
 
 # Friend
 class Friend(models.Model):
-    log_date = models.DateField('date published')
+    log_date = models.DateField('Date')
     friend = models.CharField(max_length=100)
-    duration = models.IntegerField()
+    duration = models.IntegerField(default=0)
     indoor = models.BooleanField(default=False)
     masked = models.BooleanField(default=True)
     distanced = models.BooleanField(default=True)
@@ -134,7 +133,7 @@ class FriendForm(ModelForm):
 
 # Doctor
 class Doctor(models.Model):
-    log_date = models.DateField('date published')
+    log_date = models.DateField('Date')
     doctor = models.CharField(max_length=200)
     specialty = models.CharField(max_length=200)
     purpose = models.CharField(max_length=200)
@@ -160,15 +159,15 @@ class Trip(models.Model):
         ('AP', 'Airplane'),
         ('RS', 'Rideshare'),
     )
-    log_date = models.DateField('date published')
+    log_date = models.DateField('Date')
     destination = models.CharField(max_length=100)
     travel_mode = models.CharField(max_length=2, choices=TRANSPORTATION_CHOICES)
-    duration = models.CharField(max_length=100, default="")
+    duration = models.IntegerField(default=0)
     masked = models.BooleanField(default=True)
     risk_score = models.IntegerField(default=-1)
 
     def __str__(self):
-        return "Travelled to " + self.destination + " in a " + self.travel_mode + "."
+        return "Traveled to " + self.destination + " in a " + self.travel_mode + "."
 
 
 class TripForm(ModelForm):
@@ -186,7 +185,7 @@ class Device(models.Model):
         ('AD','Android'),
     )
     device = models.CharField(max_length=2, choices=DEVICE_CHOICES)
-    date_added = models.DateField('date published')
+    date_added = models.DateField('Date')
 
     def __str__(self):
         return self.device + " added on " + str(self.date_added) + "."
