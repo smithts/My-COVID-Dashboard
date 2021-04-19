@@ -4,6 +4,8 @@ from .models import *
 from django.shortcuts import render, redirect
 from .utils import calculate_risk
 import logging
+import datetime
+import random
 
 logger = logging.getLogger(__name__)
 
@@ -198,7 +200,32 @@ def success_trip(request):
 
 def view_sync(request):
     deviceHeaders = ['Device', 'Date Added', '']
-    healthHeaders = ['Date', 'From', 'Activity', '']
+    healthHeaders = ['Date', 'From', 'Activity', 'Daily Step Count', '']
+
+    deviceList = Device.objects.all()
+    if deviceList:
+        for d in deviceList:
+            hd = HealthData.objects.filter(device=d)
+            if not hd:
+                logCount = 0
+                activities = ['Walk','Run','Bike Ride']
+                while logCount < 6:
+                    activity = random.choice(activities)
+                    #Generate random date from the last 2 months
+                    start_date = datetime.date(2021,2,1)
+                    end_date = d.date_added
+                    time_between_dates = end_date - start_date
+                    days_between_dates = time_between_dates.days
+                    random_number_of_days = random.randrange(days_between_dates)
+                    random_date = start_date + datetime.timedelta(days=random_number_of_days)
+
+                    #Generate random step count
+                    number_of_steps = random.randrange(8000, 20000)
+
+                    #Create health data entry
+                    healthLog = HealthData(device=d, log_date=random_date, activity=activity, step_count=number_of_steps)
+                    healthLog.save()
+                    logCount+=1
 
     context = {
         'device': Device.objects.all().order_by('-date_added'),
