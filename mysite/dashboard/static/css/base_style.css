@@ -41,7 +41,6 @@ li a:hover {
 #risk_display {
     margin: auto;
     width: 50%;
-    border: 1px solid red;
     padding: 10px;
     padding-top: 25px;
 }
@@ -161,4 +160,41 @@ form {
     margin-right: auto;
     border: 1px solid #bbbbbb;
     margin-bottom: 20px;
+}
+
+.risk_display {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    padding-top: 25px;
+    font-size: 16pt;
+}
+
+.risk_display p {
+    text-align: center;
+}
+
+#low {
+    border: 5px solid green;
+}
+
+#medium {
+    border: 5px solid yellow;
+}
+
+#high {
+    border: 5px solid orange;
+    font-weight: bold;
+}
+
+#very_high {
+    border: 5px solid red;
+    font-weight: bold;
+    color: red;
+    font-size: 20pt;
+}
+
+.warning_message {
+    font-style: italic;
+    color: black;
 }
