@@ -163,6 +163,7 @@ class Trip(models.Model):
     log_date = models.DateField('date published')
     destination = models.CharField(max_length=100)
     travel_mode = models.CharField(max_length=2, choices=TRANSPORTATION_CHOICES)
+    duration = models.CharField(max_length=100)
     masked = models.BooleanField(default=True)
     risk_score = models.IntegerField(default=-1)
 
@@ -174,7 +175,7 @@ class TripForm(ModelForm):
     class Meta:
         widgets = {'log_date': DateInput()}
         model = Trip
-        fields = ['log_date', 'destination', 'travel_mode', 'masked']
+        fields = ['log_date', 'duration', 'destination', 'travel_mode', 'masked']
 
 # Sync Device
 class Device(models.Model):
