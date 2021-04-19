@@ -10,7 +10,8 @@
 {% if trip %}
     {% for t in trip %}
        <tr class="results_row">
-           <td>{{ t.log_date }}</td><td>{{ t.destination }}</td><td>{{ t.get_travel_mode_display }}</td><td>{{ t.masked }}</td>
+           <td>{{ t.log_date }}</td><td>{{ t.destination }}</td><td>{{ t.get_travel_mode_display }}</td>
+           <td>{{ t.duration }}</td><td>{{ t.masked }}</td>
            <td><a href="{% url 'dashboard:delete_trip' t.id %}">DELETE</a></td>
        </tr>
     {% endfor %}

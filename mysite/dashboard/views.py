@@ -170,7 +170,7 @@ def success_friend(request):
 
 # Trip
 def view_trip(request):
-    headers = ['Date', 'Location', 'Travel Mode', 'Masked', '']
+    headers = ['Date', 'Location', 'Travel Mode', 'Duration', 'Masked', '']
 
     context = {
         'trip': Trip.objects.all().order_by(log_order),
