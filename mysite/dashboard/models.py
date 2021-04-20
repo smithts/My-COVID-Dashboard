@@ -25,6 +25,10 @@ class Food_Contact(models.Model):
     def __str__(self):
         return self.title
 
+class User(models.Model):
+    email = models.EmailField(max_length=200)
+    password = models.CharField(max_length=50)
+    name = models.CharField(max_length=200)
 
 class Food(models.Model):
     MODE_CHOICES = (
