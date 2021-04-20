@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 travelRestrictionController = TravelRestrictionsAPI.TravelRestrictionController
 
 
-
 def get_risk_label(risk_score):
     if risk_score >= 30:
         return "VERY HIGH"
