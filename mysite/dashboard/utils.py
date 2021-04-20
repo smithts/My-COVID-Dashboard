@@ -1,8 +1,5 @@
 from enum import IntEnum, Enum
 
-# high = more than 5 flags in the past 2 weeks
-# medium = between 2-5 flags in the past 2 weeks
-# low = between 0-1 flags in the past 2 weeks
 from django.utils import timezone
 from datetime import timedelta
 import logging
@@ -11,52 +8,47 @@ from .models import *
 
 logger = logging.getLogger(__name__)
 
-def get_risk_label(num_flags):
+high_risk_sites = ["New York City", "NYC", "Los Angeles",
+                   "LA", "Chicago", "Houston", "Phoenix",
+                   "Philadelphia", "San Antonio", "San Diego",
+                   "Dallas", "San  Jose", "Austin", "Jacksonville",
+                   "Fort Worth", "San Francisco", "Columbus",
+                   "Charlotte", "Indianapolis", "Seattle", "Denver",
+                   "Washington", "Washington, DC", "DC", "El Paso",
+                   "Las Vegas", "Portland"]
 
-    if num_flags >= 30:
+def is_high_risk_site(destination):
+    return destination in high_risk_sites
+
+def get_risk_label(risk_score):
+    if risk_score >= 30:
         return "VERY HIGH"
-    elif num_flags >= 20:
+    elif risk_score >= 20:
         return "HIGH"
-    elif num_flags >= 10:
+    elif risk_score >= 10:
         return "MEDIUM"
     else:
         return "LOW"
-
-#get risk by counting the number of flagged events of each type
-def get_risk(flags_list):
-    count = 0
-    for flags in flags_list:
-        count += len(flags)
-
-    return get_risk_label(count)
-
-
 
 
 def calculate_risk():
     log_date_range = timezone.now().date() - timedelta(days=14)
     logger.error("Calculating overall risk")
     logger.error("========================")
-    sum  = calculate_overall_trip_risk(log_date_range)
-    logger.error("Overall risk is currently " + str(sum) + "\n")
-    sum += calculate_overall_food_risk(log_date_range)
-    logger.error("Overall risk is currently " + str(sum) + "\n")
-    sum += calculate_overall_friend_risk(log_date_range)
-    logger.error("Overall risk is currently " + str(sum) + "\n")
-    sum += calculate_overall_symptom_risk(log_date_range)
-    logger.error("Overall risk is currently " + str(sum) + "\n")
+    risk  = calculate_overall_trip_risk(log_date_range)
+    logger.error("Overall risk is currently " + str(risk) + "\n")
+    risk += calculate_overall_food_risk(log_date_range)
+    logger.error("Overall risk is currently " + str(risk) + "\n")
+    risk += calculate_overall_friend_risk(log_date_range)
+    logger.error("Overall risk is currently " + str(risk) + "\n")
+    risk += calculate_overall_symptom_risk(log_date_range)
+    logger.error("Overall risk is currently " + str(risk) + "\n")
 
     logger.error("========================")
-    logger.error("Total overall risk is " + get_risk_label(sum))
+    logger.error("Total overall risk is " + get_risk_label(risk))
     logger.error("========================")
 
-    return get_risk_label(sum)
-
-#tests
-# food=[1,2,3]
-# symptom = [1,2]
-# print(get_risk([food, symptom]))
-
+    return get_risk_label(risk)
 
 
 # Food
@@ -109,10 +101,31 @@ def trip_risk(trip):
 
     risk = 1
 
-    if not trip.masked:
-        #increase total risk to 3
-        risk += 2
+    if trip.travel_mode == "AP":
+        # This is very risky behavior
+        # (Also likely illegal)
+        if not trip.masked:
+            risk = 20
+        else:
+            risk = 10
 
+    elif trip.travel_mode == "TN" or trip.travel_mode == "BS":
+        if not trip.masked:
+            risk = 10
+        else:
+            risk = 5
+
+    elif trip.travel_mode == "RS":
+        if not trip.masked:
+            risk = 5
+        else:
+            risk = 2
+
+    # Destination Logic
+    if is_high_risk_site(trip.destination):
+        risk += 15
+
+    # Committing model change to DB
     trip.risk_score = risk
     trip.save()
 
