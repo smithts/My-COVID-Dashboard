@@ -114,7 +114,6 @@ class SymptomForm(ModelForm):
         model = Symptom
         fields = ['log_date', 'type', 'severity', 'notes']
 
-
 # Friend
 class Friend(models.Model):
     log_date = models.DateField('Date')
