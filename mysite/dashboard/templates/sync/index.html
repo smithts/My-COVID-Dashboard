@@ -35,7 +35,7 @@
             <tr class="results_row">
                 <!--Note get_device_display is an example of the built in Django function:-->
                 <!--get_FOO_display() when test fields are predefined for a model.-->
-                <td>{{ hd.log_date }}</td><td>{{ hd.device.get_device_display }}</td>
+                <td>{{ hd.log_date }}</td><td>{{ hd.device }}</td>
                 <td>{{ hd.activity }}</td><td>{{ hd.step_count }}</td><td></td>
             </tr>
         {% endfor %}
