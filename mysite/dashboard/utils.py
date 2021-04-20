@@ -3,22 +3,12 @@ from enum import IntEnum, Enum
 from django.utils import timezone
 from datetime import timedelta
 import logging
+from . import TravelRestrictionsAPI
 
 from .models import *
 
 logger = logging.getLogger(__name__)
 
-high_risk_sites = ["New York City", "NYC", "Los Angeles",
-                   "LA", "Chicago", "Houston", "Phoenix",
-                   "Philadelphia", "San Antonio", "San Diego",
-                   "Dallas", "San  Jose", "Austin", "Jacksonville",
-                   "Fort Worth", "San Francisco", "Columbus",
-                   "Charlotte", "Indianapolis", "Seattle", "Denver",
-                   "Washington", "Washington, DC", "DC", "El Paso",
-                   "Las Vegas", "Portland"]
-
-def is_high_risk_site(destination):
-    return destination in high_risk_sites
 
 def get_risk_label(risk_score):
     if risk_score >= 30:
@@ -53,7 +43,7 @@ def calculate_risk():
 
 # Food
 def calculate_overall_food_risk(log_date_range):
-    logger.error("Calculating overall Food risk:")
+    logger.error("Calculating Food risk:")
 
     sum = 0
     all_food = Food.objects.filter(log_date__gte=log_date_range)
@@ -82,7 +72,7 @@ def food_risk(food):
 
 # Trip
 def calculate_overall_trip_risk(log_date_range):
-    logger.error("Calculating overall Trip risk:")
+    logger.error("Calculating Trip risk:")
 
     sum = 0
     all_trips = Trip.objects.filter(log_date__gte=log_date_range)
@@ -122,7 +112,7 @@ def trip_risk(trip):
             risk = 2
 
     # Destination Logic
-    if is_high_risk_site(trip.destination):
+    if TravelRestrictionsAPI.is_high_risk_site(trip.destination):
         risk += 15
 
     # Committing model change to DB
@@ -133,7 +123,7 @@ def trip_risk(trip):
 
 # Friend
 def calculate_overall_friend_risk(log_date_range):
-    logger.error("Calculating overall Friend risk:")
+    logger.error("Calculating Friend risk:")
 
     sum = 0
     all_friends = Friend.objects.filter(log_date__gte=log_date_range)
