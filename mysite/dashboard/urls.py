@@ -51,6 +51,7 @@ urlpatterns = [
     path('sync/delete/<int:id>/', views.delete_device, name='delete_device'),
     path('sync/success', views.success_sync, name='success_sync'),
     path('sync/device_already_synced', views.failure_sync, name='failure_sync'),
+    path('sync/device_login_failure', views.failure_sync_access, name='failure_sync_access'),
 
     #path('success', views.success, name='success')
 

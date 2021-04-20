@@ -201,33 +201,19 @@ def success_trip(request):
 def view_sync(request):
     deviceHeaders = ['Device', 'Date Added', '']
     healthHeaders = ['Date', 'From', 'Activity Log', 'Daily Step Count', '']
+    device_controllers = {'IP':iphone_controller(), 'FB':fitbit_controller(), 'AW':apple_watch_controller(), 'AD':android_controller}
 
+    data = []
     deviceList = Device.objects.all()
     if deviceList:
-        for d in deviceList:
-            hd = HealthData.objects.filter(device=d)
-            if not hd:
-                logCount = 0
-                activities = ['Run, 3.43 Miles, 365 Calories','Bike Ride, 12.22 miles, 1573 Calories','-',
-                              'Run, 2.76 Miles, 297 Calories','Bike Ride, 9.89 miles, 1224 Calories','-',
-                              'Bike Ride, 15.04 Miles, 1880 Calories']
-
-                while logCount < 7:
-                    activity = activities[logCount]
-                    date = d.date_added - datetime.timedelta(days=logCount)
-
-                    #Generate random step count
-                    number_of_steps = random.randrange(12000, 25000)
-
-                    #Create health data entry
-                    healthLog = HealthData(device=d, log_date=date, activity=activity, step_count=number_of_steps)
-                    healthLog.save()
-                    logCount+=1
+        d = deviceList[0]
+        controller = device_controllers[d.device]
+        data = controller.get_data()
 
     context = {
         'device': Device.objects.all().order_by('-date_added'),
         'deviceHeaders': deviceHeaders,
-        'data': HealthData.objects.all().order_by(log_order),
+        'data': data,
         'healthHeaders': healthHeaders
     }
 
@@ -239,8 +225,16 @@ def add_device(request):
         # Retrieve device type from form request. If a device has already been synced, do nothing.
         user_device = form.cleaned_data.get('device')
         if not Device.objects.filter(device=user_device).exists() and len(Device.objects.all())==0:
-            form.save()
-            response = redirect('/dashboard/sync/success')
+            iphone = iphone_controller()
+            user = form.cleaned_data.get("username")
+            pwd = form.cleaned_data.get("password")
+            if iphone.test_credentials(user, pwd):
+
+                form.save()
+                response = redirect('/dashboard/sync/success')
+            else:
+                response = redirect('/dashboard/sync/failure_sync_access')
+
         else:
             response = redirect('/dashboard/sync/device_already_synced')
         return response
@@ -258,9 +252,69 @@ def success_sync(request):
     return render(request, 'sync/success.html')
 
 def failure_sync(request):
-    return render(request, 'sync/device_already_synced.html')
+    context = {
+        'error':'DEVICE HAS ALREADY BEEN SYNCED'
+    }
+    return render(request, 'sync/device_error.html', context)
+
+def failure_sync_access(request):
+    context = {
+        'error':'DEVICE LOGIN CREDENTIALS INVALID'
+    }
+    return render(request, 'sync/device_error.html', context)
 
 '''
 def success(request):
-    return render(request, 'save/success.html')
+    return render(request, 'save/success.html', context)
 '''
+
+
+class health_device_api_controller:
+    def __init__(self, username="",password="", api_url="", name=""):
+        self.username =username
+        self.password=password
+        self.api_url = api_url
+        self.name = name
+
+    def get_data(self):
+        #mimic api request for health device api
+        activities = [
+            {'log_date': '2021-03-05', 'device': self.name, 'activity': 'Run, 3.43 Miles, 365 Calories', 'step_count': random.randrange(12000, 25000)},
+            {'log_date': '2021-03-05', 'device':self.name, 'activity': 'Bike Ride, 12.22 miles, 1573 Calories', 'step_count': random.randrange(12000, 25000)},
+            {'log_date': '2021-03-05', 'device': self.name, 'activity': '-', 'step_count': random.randrange(12000, 25000)},
+            {'log_date': '2021-03-05', 'device': self.name, 'activity': 'Run, 2.76 Miles, 297 Calories', 'step_count': random.randrange(12000, 25000)},
+            {'log_date': '2021-03-05', 'device': self.name, 'activity': 'Bike Ride, 9.89 miles, 1224 Calories', 'step_count':random.randrange(12000, 25000)}
+
+        ]
+        return activities
+
+
+    def test_credentials(self, username, password):
+        if username and password:
+            self.username=username
+            self.password=password
+            return True
+
+class iphone_controller(health_device_api_controller):
+    def __init__(self):
+        api_url="http://api.icloud.com"
+        name = "iPhone"
+        super().__init__(api_url=api_url, name=name)
+
+class android_controller(health_device_api_controller):
+    def __init__(self):
+        api_url = "http://api.android.com"
+        name = "Android"
+        super().__init__(api_url=api_url, name=name)
+
+class fitbit_controller(health_device_api_controller):
+    def __init__(self):
+        api_url = "http://api.icloud.watch.com"
+        name = "FitBit"
+        super().__init__(api_url=api_url, name=name)
+
+class apple_watch_controller(health_device_api_controller):
+    def __init__(self):
+        api_url = "http://api.fitbit.com"
+        name = "Apple Watch"
+        super().__init__(api_url=api_url, name=name)

@@ -189,6 +189,8 @@ class Device(models.Model):
     )
     device = models.CharField(max_length=2, choices=DEVICE_CHOICES)
     date_added = models.DateField('Date')
+    username = models.CharField(max_length=200, default="")
+    password = models.CharField(max_length=100, default="")
 
     def __str__(self):
         return self.device + " added on " + str(self.date_added) + "."
@@ -197,7 +199,7 @@ class DeviceForm(ModelForm):
     class Meta:
         widgets = {'date_added': DateInput()}
         model = Device
-        fields = ['device', 'date_added']
+        fields = ['device', 'date_added', 'username', 'password']
 
 # Sync Health Data
 class HealthData(models.Model):
@@ -209,3 +211,5 @@ class HealthData(models.Model):
 
     def __str__(self):
         return self.activity + " logged on " + str(self.log_date) + "."
+
+
