@@ -6,6 +6,7 @@ import logging
 
 from .models import *
 
+
 logger = logging.getLogger(__name__)
 
 high_risk_sites = ["New York City", "NYC", "Los Angeles",
