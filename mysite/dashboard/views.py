@@ -201,7 +201,6 @@ def success_trip(request):
 def view_sync(request):
     deviceHeaders = ['Device', 'Date Added', '']
     healthHeaders = ['Date', 'From', 'Activity Log', 'Daily Step Count', '']
-    device_controllers = {'IP':iphone_controller(), 'FB':fitbit_controller(), 'AW':apple_watch_controller(), 'AD':android_controller()}
 
     data = []
     deviceList = Device.objects.all()
@@ -225,10 +224,13 @@ def add_device(request):
         # Retrieve device type from form request. If a device has already been synced, do nothing.
         user_device = form.cleaned_data.get('device')
         if not Device.objects.filter(device=user_device).exists() and len(Device.objects.all())==0:
-            iphone = iphone_controller()
+            #iphone = iphone_controller()
+
+            controller = device_controllers[user_device]
+
             user = form.cleaned_data.get("username")
             pwd = form.cleaned_data.get("password")
-            if iphone.test_credentials(user, pwd):
+            if controller.test_credentials(user, pwd):
                 form.save()
                 response = redirect('/dashboard/sync/success')
             else:
@@ -318,3 +320,5 @@ class apple_watch_controller(health_device_api_controller):
         api_url = "http://api.fitbit.com"
         name = "Apple Watch"
         super().__init__(api_url=api_url, name=name)
+
+device_controllers = {'IP':iphone_controller(), 'FB':fitbit_controller(), 'AW':apple_watch_controller(), 'AD':android_controller()}
