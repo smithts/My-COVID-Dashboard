@@ -15,3 +15,4 @@ class TravelRestrictionController:
 
     def is_high_risk_site(destination):
         return destination in high_risk_sites
+
