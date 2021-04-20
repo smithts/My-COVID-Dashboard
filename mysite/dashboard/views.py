@@ -200,7 +200,7 @@ def success_trip(request):
 
 def view_sync(request):
     deviceHeaders = ['Device', 'Date Added', '']
-    healthHeaders = ['Date', 'From', 'Activity', 'Daily Step Count', '']
+    healthHeaders = ['Date', 'From', 'Activity Log', 'Daily Step Count', '']
 
     deviceList = Device.objects.all()
     if deviceList:
@@ -208,22 +208,19 @@ def view_sync(request):
             hd = HealthData.objects.filter(device=d)
             if not hd:
                 logCount = 0
-                activities = ['Walk','Run','Bike Ride']
-                while logCount < 6:
-                    activity = random.choice(activities)
-                    #Generate random date from the last 2 months
-                    start_date = datetime.date(2021,2,1)
-                    end_date = d.date_added
-                    time_between_dates = end_date - start_date
-                    days_between_dates = time_between_dates.days
-                    random_number_of_days = random.randrange(days_between_dates)
-                    random_date = start_date + datetime.timedelta(days=random_number_of_days)
+                activities = ['Run, 3.43 Miles, 365 Calories','Bike Ride, 12.22 miles, 1573 Calories','-',
+                              'Run, 2.76 Miles, 297 Calories','Bike Ride, 9.89 miles, 1224 Calories','-',
+                              'Bike Ride, 15.04 Miles, 1880 Calories']
+
+                while logCount < 7:
+                    activity = activities[logCount]
+                    date = d.date_added - datetime.timedelta(days=logCount)
 
                     #Generate random step count
-                    number_of_steps = random.randrange(8000, 20000)
+                    number_of_steps = random.randrange(12000, 25000)
 
                     #Create health data entry
-                    healthLog = HealthData(device=d, log_date=random_date, activity=activity, step_count=number_of_steps)
+                    healthLog = HealthData(device=d, log_date=date, activity=activity, step_count=number_of_steps)
                     healthLog.save()
                     logCount+=1
 
@@ -239,11 +236,9 @@ def view_sync(request):
 def add_device(request):
     form = DeviceForm(request.POST or None)
     if form.is_valid():
-
-        # Retrieve device type from form request. If the device has already been
-        # synced, do not add it to the database.
+        # Retrieve device type from form request. If a device has already been synced, do nothing.
         user_device = form.cleaned_data.get('device')
-        if not Device.objects.filter(device=user_device).exists():
+        if not Device.objects.filter(device=user_device).exists() and len(Device.objects.all())==0:
             form.save()
             response = redirect('/dashboard/sync/success')
         else:
