@@ -201,7 +201,7 @@ def success_trip(request):
 def view_sync(request):
     deviceHeaders = ['Device', 'Date Added', '']
     healthHeaders = ['Date', 'From', 'Activity Log', 'Daily Step Count', '']
-    device_controllers = {'IP':iphone_controller(), 'FB':fitbit_controller(), 'AW':apple_watch_controller(), 'AD':android_controller}
+    device_controllers = {'IP':iphone_controller(), 'FB':fitbit_controller(), 'AW':apple_watch_controller(), 'AD':android_controller()}
 
     data = []
     deviceList = Device.objects.all()
@@ -229,7 +229,6 @@ def add_device(request):
             user = form.cleaned_data.get("username")
             pwd = form.cleaned_data.get("password")
             if iphone.test_credentials(user, pwd):
-
                 form.save()
                 response = redirect('/dashboard/sync/success')
             else:
@@ -279,12 +278,13 @@ class health_device_api_controller:
     def get_data(self):
         #mimic api request for health device api
         activities = [
-            {'log_date': '2021-03-05', 'device': self.name, 'activity': 'Run, 3.43 Miles, 365 Calories', 'step_count': random.randrange(12000, 25000)},
-            {'log_date': '2021-03-05', 'device':self.name, 'activity': 'Bike Ride, 12.22 miles, 1573 Calories', 'step_count': random.randrange(12000, 25000)},
-            {'log_date': '2021-03-05', 'device': self.name, 'activity': '-', 'step_count': random.randrange(12000, 25000)},
-            {'log_date': '2021-03-05', 'device': self.name, 'activity': 'Run, 2.76 Miles, 297 Calories', 'step_count': random.randrange(12000, 25000)},
-            {'log_date': '2021-03-05', 'device': self.name, 'activity': 'Bike Ride, 9.89 miles, 1224 Calories', 'step_count':random.randrange(12000, 25000)}
-
+            {'log_date': datetime.date.today(), 'device': self.name, 'activity': 'Run, 3.43 Miles, 365 Calories', 'step_count': random.randrange(12000, 25000)},
+            {'log_date': datetime.date.today() - datetime.timedelta(days=1), 'device':self.name, 'activity': 'Bike Ride, 12.22 miles, 1573 Calories', 'step_count': random.randrange(12000, 25000)},
+            {'log_date': datetime.date.today() - datetime.timedelta(days=2), 'device': self.name, 'activity': '-', 'step_count': random.randrange(12000, 25000)},
+            {'log_date': datetime.date.today() - datetime.timedelta(days=3), 'device': self.name, 'activity': 'Run, 2.76 Miles, 297 Calories', 'step_count': random.randrange(12000, 25000)},
+            {'log_date': datetime.date.today() - datetime.timedelta(days=4), 'device': self.name, 'activity': 'Bike Ride, 9.89 miles, 1224 Calories', 'step_count':random.randrange(12000, 25000)},
+            {'log_date': datetime.date.today() - datetime.timedelta(days=5), 'device': self.name, 'activity': '-', 'step_count': random.randrange(12000, 25000)},
+            {'log_date': datetime.date.today() - datetime.timedelta(days=6), 'device': self.name, 'activity': 'Bike Ride, 15.04 miles, 1880 Calories', 'step_count':random.randrange(12000, 25000)}
         ]
         return activities
 
