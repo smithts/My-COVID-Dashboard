@@ -9,6 +9,9 @@ from .models import *
 
 logger = logging.getLogger(__name__)
 
+travelRestrictionController = TravelRestrictionsAPI.TravelRestrictionController
+
+
 
 def get_risk_label(risk_score):
     if risk_score >= 30:
@@ -112,7 +115,7 @@ def trip_risk(trip):
             risk = 2
 
     # Destination Logic
-    if TravelRestrictionsAPI.is_high_risk_site(trip.destination):
+    if travelRestrictionController.is_high_risk_site(trip.destination):
         risk += 15
 
     # Committing model change to DB
